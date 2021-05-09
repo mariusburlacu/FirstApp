@@ -16,7 +16,8 @@
         android:weightSum="3"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="25dp"
+        android:id="@+id/sectoare">
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/text_fotbal"
+            app:layout_constraintBottom_toTopOf="@id/rv_terenuri"
             android:layout_margin="8dp"
             android:id="@+id/spinner_sectoare"
             android:textAlignment="center"
@@ -38,19 +39,26 @@
             />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_fotbal"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/menu_fotbal"/>
+        android:scrollbars="vertical"
+        android:id="@+id/rv_terenuri"
+        app:layout_constraintTop_toBottomOf="@+id/sectoare"/>
+
+<!--    <TextView-->
+<!--        android:id="@+id/text_fotbal"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:text="@string/menu_fotbal"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

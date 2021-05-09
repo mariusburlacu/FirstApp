@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/text_fotbal"
             android:layout_margin="8dp"
             android:id="@+id/spinner_sectoare"
             android:textAlignment="center"

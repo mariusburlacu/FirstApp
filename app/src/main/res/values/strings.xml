@@ -33,8 +33,12 @@
     <string name="remember_me">Remember me</string>
     <string name="menu_handbal">Handbal</string>
     <string name="menu_tenis">Tenis</string>
+    <string name="nume">Nume</string>
+    <string name="adresa">Adresa</string>
+    <string name="rezerva_teren">Inchiriaza teren</string>
 
     <string-array name="sectoare">
+        <item>Toate</item>
         <item>Sector 1</item>
         <item>Sector 2</item>
         <item>Sector 3</item>
