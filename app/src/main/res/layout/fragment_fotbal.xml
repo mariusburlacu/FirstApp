@@ -16,15 +16,18 @@
         android:weightSum="3"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="25dp"
-        android:id="@+id/sectoare">
+        android:layout_marginTop="10dp"
+        android:id="@+id/sectoare"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:text="@string/alege_sector"/>
+            android:text="@string/alege_sector"
+            android:background="@drawable/border"/>
 
         <Spinner
             android:layout_width="wrap_content"
@@ -41,24 +44,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:scrollbars="vertical"
         android:id="@+id/rv_terenuri"
-        app:layout_constraintTop_toBottomOf="@+id/sectoare"/>
+        app:layout_constraintTop_toBottomOf="@+id/sectoare"
+        android:paddingBottom="65dp"
+        android:layout_marginTop="10dp"/>
 
-<!--    <TextView-->
-<!--        android:id="@+id/text_fotbal"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textSize="20sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:text="@string/menu_fotbal"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

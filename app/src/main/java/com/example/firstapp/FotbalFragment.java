@@ -70,46 +70,86 @@ public class FotbalFragment extends Fragment {
                 Log.v("select", sectorSpinner);
 
                 rv_terenuri.setLayoutManager(new LinearLayoutManager(adapterView.getContext()));
+//                List<Sport> terenuri_s1 = readSector(1);
+//                List<Sport> terenuri_s2 = readSector(2);
+//                List<Sport> terenuri_s3 = readSector(3);
+//                List<Sport> terenuri_s4 = readSector(4);
+//                List<Sport> terenuri_s5 = readSector(5);
+//                List<Sport> terenuri_s6 = readSector(6);
 
 
                 if(sectorSpinner.equals("Sector 1")){
+                    terenuri.clear();
+                    getTerenuriFromFirebase(new TerenuriListCallback() {
+                        @Override
+                        public void onCallback(List<Sport> value) {
+                            Log.v("Terenuri", value.toString());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            rv_terenuri.setAdapter(adapter);
+                        }
+                    }, 1);
 
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(readSector(1), adapterView.getContext());
-                    rv_terenuri.getRecycledViewPool().clear();
-                    adapter.notifyDataSetChanged();
-                    rv_terenuri.setAdapter(adapter);
-                    Log.v("terenuri", readSector(1).toString());
                 } else if(sectorSpinner.equals("Sector 2")){
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(readSector(2), adapterView.getContext());
-                    rv_terenuri.getRecycledViewPool().clear();
-                    adapter.notifyDataSetChanged();
-                    rv_terenuri.setAdapter(adapter);
-                    Log.v("terenuri", readSector(2).toString());
+                    terenuri.clear();
+                    getTerenuriFromFirebase(new TerenuriListCallback() {
+                        @Override
+                        public void onCallback(List<Sport> value) {
+                            Log.v("Terenuri", value.toString());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            rv_terenuri.setAdapter(adapter);
+                        }
+                    }, 2);
                 } else if(sectorSpinner.equals("Sector 3")){
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(readSector(3), adapterView.getContext());
-                    rv_terenuri.getRecycledViewPool().clear();
-                    adapter.notifyDataSetChanged();
-                    rv_terenuri.setAdapter(adapter);
+                    terenuri.clear();
+                    getTerenuriFromFirebase(new TerenuriListCallback() {
+                        @Override
+                        public void onCallback(List<Sport> value) {
+                            Log.v("Terenuri", value.toString());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            rv_terenuri.setAdapter(adapter);
+                        }
+                    }, 3);
                 } else if(sectorSpinner.equals("Sector 4")){
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(readSector(4), adapterView.getContext());
-                    rv_terenuri.getRecycledViewPool().clear();
-                    adapter.notifyDataSetChanged();
-                    rv_terenuri.setAdapter(adapter);
+                    terenuri.clear();
+                    getTerenuriFromFirebase(new TerenuriListCallback() {
+                        @Override
+                        public void onCallback(List<Sport> value) {
+                            Log.v("Terenuri", value.toString());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            rv_terenuri.setAdapter(adapter);
+                        }
+                    }, 4);
                 } else if(sectorSpinner.equals("Sector 5")){
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(readSector(5), adapterView.getContext());
-                    rv_terenuri.getRecycledViewPool().clear();
-                    adapter.notifyDataSetChanged();
-                    rv_terenuri.setAdapter(adapter);
+                    terenuri.clear();
+                    getTerenuriFromFirebase(new TerenuriListCallback() {
+                        @Override
+                        public void onCallback(List<Sport> value) {
+                            Log.v("Terenuri", value.toString());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            rv_terenuri.setAdapter(adapter);
+                        }
+                    }, 5);
                 } else if(sectorSpinner.equals("Sector 6")){
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(readSector(6), adapterView.getContext());
-                    rv_terenuri.getRecycledViewPool().clear();
-                    adapter.notifyDataSetChanged();
-                    rv_terenuri.setAdapter(adapter);
+                    terenuri.clear();
+                    getTerenuriFromFirebase(new TerenuriListCallback() {
+                        @Override
+                        public void onCallback(List<Sport> value) {
+                            Log.v("Terenuri", value.toString());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            rv_terenuri.setAdapter(adapter);
+                        }
+                    }, 6);
+                } else {
+                    terenuri.clear();
+                    getTerenuriFromFirebase(new TerenuriListCallback() {
+                        @Override
+                        public void onCallback(List<Sport> value) {
+                            Log.v("Terenuri", value.toString());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            rv_terenuri.setAdapter(adapter);
+                        }
+                    }, 0);
                 }
-//                else {
-//                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(terenuri_fotbal, adapterView.getContext());
-//                    rv_terenuri.setAdapter(adapter);
-//                }
             }
 
             @Override
@@ -118,23 +158,64 @@ public class FotbalFragment extends Fragment {
             }
         });
 
-
-//        rv_terenuri.setLayoutManager(new LinearLayoutManager(this.getContext()));
-//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(terenuri, this.getContext());
-//        rv_terenuri.setAdapter(adapter);
     }
 
-    public List<Sport> readSector(int sector){
-        reff.addValueEventListener(new ValueEventListener() {
+//    public List<Sport> readSector(int sector){
+//        reff.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                terenuri.clear();
+//                List<String> keys = new ArrayList<>();
+//                for(DataSnapshot keyNode : snapshot.child("TerenuriFotbal").child("Sector " + sector).getChildren()){
+//                    keys.add(keyNode.getKey());
+//                    Sport sport = keyNode.getValue(Sport.class);
+//                    terenuri.add(sport);
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        return terenuri;
+//    }
+
+    public interface TerenuriListCallback{
+        void onCallback(List<Sport> value);
+    }
+
+    public void getTerenuriFromFirebase(final TerenuriListCallback myCallback, int sector){
+        if(sector==0){
+            for(int i = 1; i <= 6; i++){
+                reff.child("TerenuriFotbal").child("Sector " + i).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            Sport sport = dataSnapshot.getValue(Sport.class);
+                            assert sport != null;
+                            terenuri.add(sport);
+                        }
+                        myCallback.onCallback(terenuri);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        }
+        reff.child("TerenuriFotbal").child("Sector " + sector).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                terenuri.clear();
-                List<String> keys = new ArrayList<>();
-                for(DataSnapshot keyNode : snapshot.child("TerenuriFotbal").child("Sector " + sector).getChildren()){
-                    keys.add(keyNode.getKey());
-                    Sport sport = keyNode.getValue(Sport.class);
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Sport sport = dataSnapshot.getValue(Sport.class);
+                    assert sport != null;
                     terenuri.add(sport);
                 }
+                myCallback.onCallback(terenuri);
             }
 
             @Override
@@ -142,7 +223,6 @@ public class FotbalFragment extends Fragment {
 
             }
         });
-        return terenuri;
     }
 
 }
