@@ -1,9 +1,11 @@
 package com.example.firstapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
@@ -16,7 +18,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Signup extends AppCompatActivity {
 
@@ -30,6 +37,7 @@ public class Signup extends AppCompatActivity {
     private User user; // e mandatory - o folosim pentru FIREBASE
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +56,7 @@ public class Signup extends AppCompatActivity {
                 String email = et_email.getText().toString();
                 String pass1 = et_password.getText().toString();
 
-                reff.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                reff.child("Users").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(!snapshot.exists()){
@@ -58,7 +66,7 @@ public class Signup extends AppCompatActivity {
 
 
                             //reff.child("User "+String.valueOf(maxId+1)).setValue(user);
-                            reff.child(et_username.getText().toString()).setValue(user);
+                            reff.child("Users").child(et_username.getText().toString()).setValue(user);
                             Toast.makeText(Signup.this, "Signup successful!", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(Signup.this, LoginActivity.class);
                             startActivity(intent);

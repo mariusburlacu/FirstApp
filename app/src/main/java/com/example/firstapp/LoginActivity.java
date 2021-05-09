@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     preferences.edit().clear().apply();
                 }
 
-                reff.child(username).addValueEventListener(new ValueEventListener() {
+                reff.child("Users").child(username).addValueEventListener(new ValueEventListener() {
                     // reff.child(username) practic iti verifica daca exista username-ul, pentru ca
                     // am pus ca fiecare child sa aiba numele username-ului
                     @Override

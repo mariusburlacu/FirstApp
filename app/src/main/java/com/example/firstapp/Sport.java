@@ -5,6 +5,9 @@ public class Sport {
     private String adresa;
     private String tipTeren;
 
+    public Sport() {
+    }
+
     public Sport(String nume, String adresa, String tipTeren) {
         this.nume = nume;
         this.adresa = adresa;
