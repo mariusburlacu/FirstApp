@@ -1,6 +1,8 @@
 package com.example.firstapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.btn_inchiriaza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(holder.itemView.getContext(), "Clicked on button", Toast.LENGTH_LONG).show();
+                String adresa = holder.tv_adresa_teren.getText().toString();
+                Log.v("adresa", adresa);
+                String cifraSector = adresa.substring(adresa.length() - 1);
+                Intent intent = new Intent(holder.itemView.getContext(), InchiriazaTeren.class);
+                intent.putExtra("nume_teren", holder.tv_nume_teren.getText().toString());
+                intent.putExtra("sector_teren", cifraSector);
+                holder.itemView.getContext().startActivity(intent);
             }
         });
     }
@@ -61,6 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tv_nume_teren = itemView.findViewById(R.id.tv_nume_teren);
             tv_adresa_teren = itemView.findViewById(R.id.tv_adresa_teren);
             btn_inchiriaza = itemView.findViewById(R.id.btn_inchiriaza);
+
         }
     }
 }

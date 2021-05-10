@@ -42,6 +42,7 @@
     <string name="pret_timpul_sapt">timpul saptamanii</string>
     <string name="pret_weekend">weekend</string>
     <string name="perioada">perioada</string>
+    <string name="inchiriaza">Inchiriaza teren</string>
 
     <string-array name="sectoare">
         <item>Toate</item>
