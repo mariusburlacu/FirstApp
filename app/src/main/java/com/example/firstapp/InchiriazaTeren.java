@@ -3,16 +3,21 @@ package com.example.firstapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
+import java.util.List;
 
 public class InchiriazaTeren extends AppCompatActivity {
     private TextView nume_teren;
@@ -38,6 +44,7 @@ public class InchiriazaTeren extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sport_rent_layout);
+        setTitle("Inchiriaza teren");
 
         reff = FirebaseDatabase.getInstance().getReference();
         nume_teren_extra = getIntent().getStringExtra("nume_teren");
@@ -47,11 +54,12 @@ public class InchiriazaTeren extends AppCompatActivity {
         Log.v("nume_teren_extra", nume_teren_extra);
 
         initViews();
+        ArrayAdapter<CharSequence> oreAdapter = ArrayAdapter.createFromResource(this, R.array.ore, android.R.layout.simple_expandable_list_item_1);
+        lv_ore.setAdapter(oreAdapter);
 
         autocompletareDate();
 
-        ArrayAdapter<CharSequence> oreAdapter = ArrayAdapter.createFromResource(this, R.array.ore, android.R.layout.simple_expandable_list_item_1);
-        lv_ore.setAdapter(oreAdapter);
+
 
         Date dataCurenta = new Date();
         zi_inchiriere.setMaxDate(dataCurenta.getTime() + 604800000);
