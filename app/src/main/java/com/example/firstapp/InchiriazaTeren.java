@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class InchiriazaTeren extends AppCompatActivity {
     private List<String> ore_ocupate;
     private Map<String, Object> ore;
     private List<Boolean> ore_ocupate_baza_de_date = new ArrayList<Boolean>();
+    private RadioGroup rg_tip_teren;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +87,22 @@ public class InchiriazaTeren extends AppCompatActivity {
             }
         });
 
+        reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("tipTeren").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String tipTeren = (String) snapshot.getValue();
+                if(tipTeren.equals("acoperit")){
+                    rg_tip_teren.getChildAt(1).setEnabled(false);
+                } else if(tipTeren.equals("aer liber")){
+                    rg_tip_teren.getChildAt(0).setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         btn_inchiriaza.setOnClickListener(new View.OnClickListener() {
@@ -95,21 +113,39 @@ public class InchiriazaTeren extends AppCompatActivity {
                     public void onCallback(List<Boolean> value) {
                         Log.v("ore",ore_ocupate.toString());
                         SparseBooleanArray checked = lv_ore.getCheckedItemPositions();
-                        Log.v("Checked", checked.toString());
-                        int len = lv_ore.getCount();
-                        for(int i = 0; i < len ; i++){
-                            if(checked.get(i)){
-                                ore_ocupate.add((String) oreAdapter.getItem(i));
-                                ore.put((String) oreAdapter.getItem(i), true);
-                                reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").updateChildren(ore);
+                        Log.v("checkl", checked.toString());
+                        boolean existaOraSelectata = false;
+
+                        // NU TRB SA VERIFIC DACA ESTE NULL, TRB SA VERIFIC DACA EXISTA CEL PUTIN UN ITEM SELECTAT
+                        for(int i = 0; i < oreAdapter.getCount(); i++){
+                            if(checked.get(i) == true){
+                                existaOraSelectata = true;
+                                break;
                             }
                         }
-                        lv_ore.clearChoices();
-                        oreAdapter.notifyDataSetChanged();
 
-                        Toast.makeText(view.getContext(), "Ati rezervat cu succes!", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(InchiriazaTeren.this, MainActivity2.class);
-                        startActivity(intent);
+                        if(existaOraSelectata == true && rg_tip_teren.getCheckedRadioButtonId() != -1){
+                            int len = lv_ore.getCount();
+                            for(int i = 0; i < len ; i++){
+                                if(checked.get(i)){
+                                    ore_ocupate.add((String) oreAdapter.getItem(i));
+                                    ore.put((String) oreAdapter.getItem(i), true);
+                                    reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").updateChildren(ore);
+                                }
+                            }
+                            lv_ore.clearChoices();
+                            oreAdapter.notifyDataSetChanged();
+
+                            Toast.makeText(view.getContext(), "Ati rezervat cu succes!", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(InchiriazaTeren.this, MainActivity2.class);
+                            startActivity(intent);
+
+                        } else if (rg_tip_teren.getCheckedRadioButtonId() == -1){
+                            Toast.makeText(view.getContext(), "Selectati tipul de teren!", Toast.LENGTH_LONG).show();
+                        } else if(existaOraSelectata == false || checked.size() == 0) {
+                            Toast.makeText(view.getContext(), "Selectati orele!", Toast.LENGTH_LONG).show();
+                        }
+
 
                     }
                 });
@@ -129,6 +165,7 @@ public class InchiriazaTeren extends AppCompatActivity {
         zi_inchiriere = findViewById(R.id.dp_start);
         lv_ore = findViewById(R.id.lv_ore);
         btn_inchiriaza = findViewById(R.id.btn_rent);
+        rg_tip_teren = findViewById(R.id.rg_tip_teren);
     }
 
     private void autocompletareDate(){

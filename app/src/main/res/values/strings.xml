@@ -43,6 +43,9 @@
     <string name="pret_weekend">weekend</string>
     <string name="perioada">perioada</string>
     <string name="inchiriaza">Inchiriaza teren</string>
+    <string name="teren_acoperit">acoperit</string>
+    <string name="teren_aer_liber">aer liber</string>
+    <string name="tip_teren">Alegeti tip teren</string>
 
     <string-array name="sectoare">
         <item>Toate</item>
