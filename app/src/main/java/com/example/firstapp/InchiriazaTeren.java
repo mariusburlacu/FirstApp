@@ -39,7 +39,7 @@ public class InchiriazaTeren extends AppCompatActivity {
     private TextView nume_teren;
     private TextView adresa_teren;
     private TextView pret_teren;
-    private DatePicker zi_inchiriere;
+//    private DatePicker zi_inchiriere;
     private ListView lv_ore;
     private Button btn_inchiriaza;
     private DatabaseReference reff;
@@ -51,7 +51,8 @@ public class InchiriazaTeren extends AppCompatActivity {
     private List<String> ore_ocupate_baza_de_date = new ArrayList<String>();
     private RadioGroup rg_tip_teren;
 
-
+    private TextView et_zi;
+    final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,33 +85,33 @@ public class InchiriazaTeren extends AppCompatActivity {
 
         oreDisponibileAzi();
 
-        zi_inchiriere.init(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
-                ArrayAdapter<CharSequence> oreRecreate = ArrayAdapter.createFromResource(datePicker.getContext(), R.array.ore, android.R.layout.simple_list_item_multiple_choice);
-                lv_ore.setAdapter(oreRecreate);
-                List<String> oreLista = Arrays.asList(getResources().getStringArray(R.array.ore));
-                String dataSelectata = i2+"-"+(i1+1)+"-"+i;
-                getOreFromFirebase(dataSelectata,new OreListCallback() {
-                    @Override
-                    public void onCallback(List<String> value) {
-                        int i = 0;
-                        Log.v("ore", value.toString());
-                        List<Integer> listaIndex = new ArrayList<>();
-                        listaIndex = getSameIndexes(value, oreLista);
-                        for(int index : listaIndex){
-                            View child = lv_ore.getChildAt(index);
-                            child.setBackgroundColor(getResources().getColor(R.color.common_google_signin_btn_text_dark_disabled));
-                            child.setEnabled(false);
-                            child.setOnClickListener(null);
-                        }
-                        listaIndex.clear();
-                        value.clear();
-                    }
-
-                });
-            }
-        });
+//        zi_inchiriere.init(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), new DatePicker.OnDateChangedListener() {
+//            @Override
+//            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+//                ArrayAdapter<CharSequence> oreRecreate = ArrayAdapter.createFromResource(datePicker.getContext(), R.array.ore, android.R.layout.simple_list_item_multiple_choice);
+//                lv_ore.setAdapter(oreRecreate);
+//                List<String> oreLista = Arrays.asList(getResources().getStringArray(R.array.ore));
+//                String dataSelectata = i2+"-"+(i1+1)+"-"+i;
+//                getOreFromFirebase(dataSelectata,new OreListCallback() {
+//                    @Override
+//                    public void onCallback(List<String> value) {
+//                        int i = 0;
+//                        Log.v("ore", value.toString());
+//                        List<Integer> listaIndex = new ArrayList<>();
+//                        listaIndex = getSameIndexes(value, oreLista);
+//                        for(int index : listaIndex){
+//                            View child = lv_ore.getChildAt(index);
+//                            child.setBackgroundColor(getResources().getColor(R.color.common_google_signin_btn_text_dark_disabled));
+//                            child.setEnabled(false);
+//                            child.setOnClickListener(null);
+//                        }
+//                        listaIndex.clear();
+//                        value.clear();
+//                    }
+//
+//                });
+//            }
+//        });
 
         reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("tipTeren").addValueEventListener(new ValueEventListener() {
             @Override
@@ -130,10 +131,66 @@ public class InchiriazaTeren extends AppCompatActivity {
         });
 
 
+        // TEST PENTRU DATEPICKER DIALOG - MERGE!
+
+        DatePickerDialog.OnDateSetListener dateSet = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(); // metoda care scrie data in textview
+
+                ArrayAdapter<CharSequence> oreRecreate = ArrayAdapter.createFromResource(view.getContext(), R.array.ore, android.R.layout.simple_list_item_multiple_choice);
+                lv_ore.setAdapter(oreRecreate);
+                List<String> oreLista = Arrays.asList(getResources().getStringArray(R.array.ore));
+//                String dataSelectata = dayOfMonth+"-"+(monthOfYear)+"-"+year;
+                String dataSelectata = et_zi.getText().toString();
+                getOreFromFirebase(dataSelectata,new OreListCallback() {
+                    @Override
+                    public void onCallback(List<String> value) {
+                        int i = 0;
+                        Log.v("ore", value.toString());
+                        List<Integer> listaIndex = new ArrayList<>();
+                        listaIndex = getSameIndexes(value, oreLista);
+                        for(int index : listaIndex){
+                            View child = lv_ore.getChildAt(index);
+                            child.setBackgroundColor(getResources().getColor(R.color.common_google_signin_btn_text_dark_disabled));
+                            child.setEnabled(false);
+                            child.setOnClickListener(null);
+                        }
+                        listaIndex.clear();
+                        value.clear();
+                    }
+
+                });
+            }
+
+        };
+
+
+        et_zi.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                DatePickerDialog dialog = new DatePickerDialog(InchiriazaTeren.this, dateSet, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                dialog.getDatePicker().setMinDate(new Date().getTime());
+                dialog.getDatePicker().setMaxDate(new Date().getTime() + 604800000);
+                dialog.show();
+            }
+        });
+        // END TEST PENTRU DATEPICKER DIALOG - MERGE!
+
+
         btn_inchiriaza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String data = String.valueOf(zi_inchiriere.getDayOfMonth())+"-"+String.valueOf(zi_inchiriere.getMonth()+1)+"-"+String.valueOf(zi_inchiriere.getYear());
+//                String data = String.valueOf(zi_inchiriere.getDayOfMonth())+"-"+String.valueOf(zi_inchiriere.getMonth()+1)+"-"+String.valueOf(zi_inchiriere.getYear());
+                String data = et_zi.getText().toString(); // AM INLOCUIT CU DATA DE LA DATEPICKER DIALOG
                 getOreFromFirebase("sa",new OreListCallback() {
                     @Override
                     public void onCallback(List<String> value) {
@@ -181,19 +238,19 @@ public class InchiriazaTeren extends AppCompatActivity {
         });
 
         Date dataCurenta = new Date();
-        zi_inchiriere.setMaxDate(dataCurenta.getTime() + 604800000);
-        zi_inchiriere.setMinDate(dataCurenta.getTime());
-
+//        zi_inchiriere.setMaxDate(dataCurenta.getTime() + 604800000);
+//        zi_inchiriere.setMinDate(dataCurenta.getTime());
     }
 
     private void initViews(){
         nume_teren = findViewById(R.id.tv_rent_nume);
         adresa_teren = findViewById(R.id.tv_rent_adresa);
         pret_teren = findViewById(R.id.tv_rent_pret_week);
-        zi_inchiriere = findViewById(R.id.dp_start);
+//        zi_inchiriere = findViewById(R.id.dp_start);
         lv_ore = findViewById(R.id.lv_ore);
         btn_inchiriaza = findViewById(R.id.btn_rent);
         rg_tip_teren = findViewById(R.id.rg_tip_teren);
+        et_zi = findViewById(R.id.et_zi);
     }
 
     private void autocompletareDate(){
@@ -289,4 +346,13 @@ public class InchiriazaTeren extends AppCompatActivity {
 
         });
     }
+
+    // TEST DATE PICKER DIALOG
+    private void updateLabel() {
+        String myFormat = "d-M-yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        et_zi.setText(sdf.format(myCalendar.getTime()));
+    }
+    //END TEST DATE PICKER DIALOG
 }

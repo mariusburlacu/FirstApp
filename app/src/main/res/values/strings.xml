@@ -37,7 +37,7 @@
     <string name="adresa">Adresa</string>
     <string name="rezerva_teren">Inchiriaza teren</string>
     <string name="pret">Pret</string>
-    <string name="zi">Zi pentru inchiriere</string>
+    <string name="zi">Apasati pentru a selecta data pentru rezervare!</string>
     <string name="ore_disponibile">Ore disponibile</string>
     <string name="pret_timpul_sapt">timpul saptamanii</string>
     <string name="pret_weekend">weekend</string>
@@ -50,6 +50,7 @@
     <string name="sporturi">Sporturi</string>
     <string name="profilPersonal">Profil personal</string>
     <string name="menu_profil">Profil</string>
+    <string name="data">Alegeti data</string>
 
     <string-array name="sectoare">
         <item>Toate</item>

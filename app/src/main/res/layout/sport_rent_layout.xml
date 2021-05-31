@@ -125,19 +125,42 @@
 
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/zi"
-            android:gravity="center"/>
+            android:weightSum="4"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
 
-        <DatePicker
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"
-            android:id="@+id/dp_start"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/data"
+                android:gravity="center"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:text="@string/zi"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/et_zi"
+                android:layout_weight="3"
+                android:background="@drawable/border"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+<!--        <DatePicker-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:datePickerMode="spinner"-->
+<!--            android:calendarViewShown="false"-->
+<!--            android:id="@+id/dp_start"/>-->
 
         <TextView
             android:layout_width="match_parent"
