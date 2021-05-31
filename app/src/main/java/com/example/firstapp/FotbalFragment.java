@@ -37,6 +37,7 @@ import static java.lang.String.*;
 public class FotbalFragment extends Fragment {
     private DatabaseReference reff;
     public List<Sport> terenuri = new ArrayList<>();
+    public String numeUtilizator;
 
     @Nullable
     @Override
@@ -50,6 +51,8 @@ public class FotbalFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        numeUtilizator = (getActivity().getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE));
 
         reff = FirebaseDatabase.getInstance().getReference();
 
@@ -84,7 +87,7 @@ public class FotbalFragment extends Fragment {
                         @Override
                         public void onCallback(List<Sport> value) {
                             Log.v("Terenuri", value.toString());
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 1);
@@ -95,7 +98,7 @@ public class FotbalFragment extends Fragment {
                         @Override
                         public void onCallback(List<Sport> value) {
                             Log.v("Terenuri", value.toString());
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 2);
@@ -105,7 +108,7 @@ public class FotbalFragment extends Fragment {
                         @Override
                         public void onCallback(List<Sport> value) {
                             Log.v("Terenuri", value.toString());
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 3);
@@ -115,7 +118,7 @@ public class FotbalFragment extends Fragment {
                         @Override
                         public void onCallback(List<Sport> value) {
                             Log.v("Terenuri", value.toString());
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 4);
@@ -125,7 +128,7 @@ public class FotbalFragment extends Fragment {
                         @Override
                         public void onCallback(List<Sport> value) {
                             Log.v("Terenuri", value.toString());
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 5);
@@ -135,7 +138,7 @@ public class FotbalFragment extends Fragment {
                         @Override
                         public void onCallback(List<Sport> value) {
                             Log.v("Terenuri", value.toString());
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 6);
@@ -145,7 +148,7 @@ public class FotbalFragment extends Fragment {
                         @Override
                         public void onCallback(List<Sport> value) {
                             Log.v("Terenuri", value.toString());
-                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext());
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 0);

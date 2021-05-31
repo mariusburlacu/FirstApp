@@ -19,11 +19,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<Sport> terenuri;
     private Context context;
     private LayoutInflater inflater;
+    private String numeUtilizator;
 
-    public RecyclerViewAdapter(List<Sport> terenuri, Context context) {
+    public RecyclerViewAdapter(List<Sport> terenuri, Context context, String numeUtilizator) {
         this.terenuri = terenuri;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+        this.numeUtilizator = numeUtilizator;
     }
 
     @NonNull
@@ -49,6 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Intent intent = new Intent(holder.itemView.getContext(), InchiriazaTeren.class);
                 intent.putExtra("nume_teren", holder.tv_nume_teren.getText().toString());
                 intent.putExtra("sector_teren", cifraSector);
+                intent.putExtra("numeUtilizator", numeUtilizator);
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -69,7 +72,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tv_nume_teren = itemView.findViewById(R.id.tv_nume_teren);
             tv_adresa_teren = itemView.findViewById(R.id.tv_adresa_teren);
             btn_inchiriaza = itemView.findViewById(R.id.btn_inchiriaza);
-
         }
     }
 }

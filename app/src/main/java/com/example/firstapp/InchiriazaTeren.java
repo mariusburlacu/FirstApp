@@ -45,6 +45,7 @@ public class InchiriazaTeren extends AppCompatActivity {
     private DatabaseReference reff;
     public String nume_teren_extra;
     public String cifra_sector;
+    public String numeUtilizator;
     private List<String> ore_ocupate;
     private Map<String, Object> ore;
     private List<String> ore_ocupate_baza_de_date = new ArrayList<String>();
@@ -61,6 +62,8 @@ public class InchiriazaTeren extends AppCompatActivity {
         reff = FirebaseDatabase.getInstance().getReference();
         nume_teren_extra = getIntent().getStringExtra("nume_teren");
         cifra_sector = getIntent().getStringExtra("sector_teren");
+        numeUtilizator = getIntent().getStringExtra("numeUtilizator");
+
 
         Log.v("cifra_sector", cifra_sector);
         Log.v("nume_teren_extra", nume_teren_extra);
@@ -155,6 +158,7 @@ public class InchiriazaTeren extends AppCompatActivity {
                                     ore.put((String) oreAdapter.getItem(i), true);
 //                                    reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").updateChildren(ore);
                                     reff.child("Rezervari").child(data).child("Fotbal").child(nume_teren_extra).updateChildren(ore);
+                                    reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).updateChildren(ore);
                                 }
                             }
                             lv_ore.clearChoices();

@@ -3,6 +3,8 @@ package com.example.firstapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -11,6 +13,9 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -57,6 +62,8 @@ public class MainActivity2 extends AppCompatActivity {
         View headerView = nav.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.textView);
         username.setText(getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE));
+
+        String numeUtilizator = getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE);
     }
 
     @Override
@@ -94,7 +101,7 @@ public class MainActivity2 extends AppCompatActivity {
         }, 2000);
     }
 
-    //    @Override
+//    @Override
 //    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //        switch (item.getItemId()){
 //            case R.id.nav_fotbal: {
