@@ -1,5 +1,6 @@
 package com.example.firstapp;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,10 +24,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class InchiriazaTeren extends AppCompatActivity {
@@ -41,8 +47,10 @@ public class InchiriazaTeren extends AppCompatActivity {
     public String cifra_sector;
     private List<String> ore_ocupate;
     private Map<String, Object> ore;
-    private List<Boolean> ore_ocupate_baza_de_date = new ArrayList<Boolean>();
+    private List<String> ore_ocupate_baza_de_date = new ArrayList<String>();
     private RadioGroup rg_tip_teren;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,22 +76,36 @@ public class InchiriazaTeren extends AppCompatActivity {
 
         autocompletareDate();
 
-        getOreFromFirebase(new OreListCallback() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        oreDisponibileAzi();
+
+        zi_inchiriere.init(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), new DatePicker.OnDateChangedListener() {
             @Override
-            public void onCallback(List<Boolean> value) {
-                int i = 0;
-                Log.v("ore", value.toString());
-                for(Boolean ora : value){
-                    if(ora){
-                        View child = lv_ore.getChildAt(i);
-                        child.setBackgroundColor(getResources().getColor(R.color.common_google_signin_btn_text_dark_disabled));
-                        child.setEnabled(false);
-                        child.setOnClickListener(null);
-                        i++;
-                    } else {
-                        i++;
+            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+                ArrayAdapter<CharSequence> oreRecreate = ArrayAdapter.createFromResource(datePicker.getContext(), R.array.ore, android.R.layout.simple_list_item_multiple_choice);
+                lv_ore.setAdapter(oreRecreate);
+                List<String> oreLista = Arrays.asList(getResources().getStringArray(R.array.ore));
+                String dataSelectata = i2+"-"+(i1+1)+"-"+i;
+                getOreFromFirebase(dataSelectata,new OreListCallback() {
+                    @Override
+                    public void onCallback(List<String> value) {
+                        int i = 0;
+                        Log.v("ore", value.toString());
+                        List<Integer> listaIndex = new ArrayList<>();
+                        listaIndex = getSameIndexes(value, oreLista);
+                        for(int index : listaIndex){
+                            View child = lv_ore.getChildAt(index);
+                            child.setBackgroundColor(getResources().getColor(R.color.common_google_signin_btn_text_dark_disabled));
+                            child.setEnabled(false);
+                            child.setOnClickListener(null);
+                        }
+                        listaIndex.clear();
+                        value.clear();
                     }
-                }
+
+                });
             }
         });
 
@@ -108,9 +130,10 @@ public class InchiriazaTeren extends AppCompatActivity {
         btn_inchiriaza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getOreFromFirebase(new OreListCallback() {
+                String data = String.valueOf(zi_inchiriere.getDayOfMonth())+"-"+String.valueOf(zi_inchiriere.getMonth()+1)+"-"+String.valueOf(zi_inchiriere.getYear());
+                getOreFromFirebase("sa",new OreListCallback() {
                     @Override
-                    public void onCallback(List<Boolean> value) {
+                    public void onCallback(List<String> value) {
                         Log.v("ore",ore_ocupate.toString());
                         SparseBooleanArray checked = lv_ore.getCheckedItemPositions();
                         Log.v("checkl", checked.toString());
@@ -130,7 +153,8 @@ public class InchiriazaTeren extends AppCompatActivity {
                                 if(checked.get(i)){
                                     ore_ocupate.add((String) oreAdapter.getItem(i));
                                     ore.put((String) oreAdapter.getItem(i), true);
-                                    reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").updateChildren(ore);
+//                                    reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").updateChildren(ore);
+                                    reff.child("Rezervari").child(data).child("Fotbal").child(nume_teren_extra).updateChildren(ore);
                                 }
                             }
                             lv_ore.clearChoices();
@@ -186,24 +210,79 @@ public class InchiriazaTeren extends AppCompatActivity {
     }
 
     public interface OreListCallback{
-        void onCallback(List<Boolean> value);
+        void onCallback(List<String> value);
     }
 
-    public void getOreFromFirebase(final OreListCallback myCallback){
-        reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getOreFromFirebase(String data, final OreListCallback myCallback){
+        reff.child("Rezervari").child(data).child("Fotbal").child(nume_teren_extra).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        boolean ora = (boolean) dataSnapshot.getValue();
-                        ore_ocupate_baza_de_date.add(ora);
-                    }
-                    myCallback.onCallback(ore_ocupate_baza_de_date);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String ora = (String) dataSnapshot.getKey();
+                    ore_ocupate_baza_de_date.add(ora);
+                }
+                myCallback.onCallback(ore_ocupate_baza_de_date);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+        });
+//        reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                        boolean ora = (boolean) dataSnapshot.getValue();
+//                        ore_ocupate_baza_de_date.add(ora);
+//                    }
+//                    myCallback.onCallback(ore_ocupate_baza_de_date);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+    }
+
+    public List<Integer> getSameIndexes(List<String> arr1, List<String> arr2) {
+        List<Integer> indexes = new ArrayList<Integer>();
+        for(int x = 0; x < arr1.size(); x++) {
+            for(int y = 0; y < arr2.size(); y++) {
+                if(arr1.get(x).equals(arr2.get(y)))
+                    indexes.add(y);
+            }
+        }
+        return indexes;
+    }
+
+    public void oreDisponibileAzi(){
+        List<String> oreLista = Arrays.asList(getResources().getStringArray(R.array.ore));
+        Calendar calendar = Calendar.getInstance();
+        String zi = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        String luna = String.valueOf(calendar.get(Calendar.MONTH)+1);
+        String an = String.valueOf(calendar.get(Calendar.YEAR));
+
+        String dataSelectata = zi+"-"+luna+"-"+an;
+
+        getOreFromFirebase(dataSelectata,new OreListCallback() {
+            @Override
+            public void onCallback(List<String> value) {
+                int i = 0;
+                Log.v("ore", value.toString());
+                List<Integer> listaIndex = new ArrayList<>();
+                listaIndex = getSameIndexes(value, oreLista);
+                for(int index : listaIndex){
+                    View child = lv_ore.getChildAt(index);
+                    child.setBackgroundColor(getResources().getColor(R.color.common_google_signin_btn_text_dark_disabled));
+                    child.setEnabled(false);
+                    child.setOnClickListener(null);
+                }
+                listaIndex.clear();
+                value.clear();
+            }
+
         });
     }
 }

@@ -11,6 +11,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,6 +24,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,6 +50,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
 
+    //TEST
+    private Map<String, Object> ore;
+    //END TEST
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +61,33 @@ public class LoginActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayShowTitleEnabled(false); //sterge titlul aplicatiei din toolbar
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //sterge dark mode ul
         reff = FirebaseDatabase.getInstance().getReference();
+
+
+        //TEST
+//        ore = new HashMap<>();
+//        ore.put("13:00 - 14:00", true);
+//        ore.put("21:00 - 22:00", true);
+//
+//        reff.child("Rezervari").child("31-5-2021").child("Fotbal").child("CTF Mihai I").updateChildren(ore);
+//
+//        Date c = Calendar.getInstance().getTime();
+//        Log.v("Current time => ", c.toString());
+//
+//        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+//        String formattedDate = df.format(c);
+//
+//        reff.child("Rezervari").child(formattedDate).child("Fotbal").child("CTF Mihai I").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Log.v("merge", "Merge");
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+        //END TEST
 
         preferences = getSharedPreferences(LOGIN_ACTIVITY, MODE_PRIVATE);
 
