@@ -51,18 +51,22 @@ public class ProfilFragment extends Fragment {
 
         RecyclerView rv_rezervari_active = view.findViewById(R.id.rv_rezervari_terenuri_active);
         RecyclerView rv_rezervari_trecute = view.findViewById(R.id.rv_rezervari_terenuri_trecute);
+        RecyclerView rv_rezervari_anulate = view.findViewById(R.id.rv_rezervari_terenuri_anulate);
         rv_rezervari_active.setLayoutManager(new LinearLayoutManager(this.getContext()));
         rv_rezervari_trecute.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        rv_rezervari_anulate.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         getRezervari(numeUtilizator, new RezervariListCallback() {
             @Override
-            public void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute) {
+            public void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute, List<Rezervare> rezervariAnulate) {
                 Log.v("rezAc", rezervariActuale.toString());
                 Log.v("rezTr", rezervariTrecute.toString());
-                RecyclerViewAdapterRezervare adapter = new RecyclerViewAdapterRezervare(rezervariActuale, view.getContext());
-                RecyclerViewAdapterRezervare adapter2 = new RecyclerViewAdapterRezervare(rezervariTrecute, view.getContext());
+                RecyclerViewAdapterRezervare adapter = new RecyclerViewAdapterRezervare(rezervariActuale, view.getContext(), numeUtilizator);
+                RecyclerViewAdapterRezervare adapter2 = new RecyclerViewAdapterRezervare(rezervariTrecute, view.getContext(), numeUtilizator);
+                RecyclerViewAdapterRezervare adapter3 = new RecyclerViewAdapterRezervare(rezervariAnulate, view.getContext(), numeUtilizator);
                 rv_rezervari_active.setAdapter(adapter);
                 rv_rezervari_trecute.setAdapter(adapter2);
+                rv_rezervari_anulate.setAdapter(adapter3);
             }
         });
 
@@ -110,7 +114,7 @@ public class ProfilFragment extends Fragment {
     }
 
     public interface RezervariListCallback {
-        void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute);
+        void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute, List<Rezervare> rezervariAnulate);
     }
 
     public void getRezervari(String nume, RezervariListCallback myCallback){
@@ -127,7 +131,7 @@ public class ProfilFragment extends Fragment {
                             for(DataSnapshot data : snapshot.getChildren()){
                                 String numeTeren = data.getKey();
 
-                                reff.child("Users").child(nume).child("rezervari").child(dataRezervare).child(numeTeren).addValueEventListener(new ValueEventListener() {
+                                reff.child("Users").child(nume).child("rezervari").child(dataRezervare).child(numeTeren).child("ore").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         List<String> ore = new ArrayList<>();
@@ -139,14 +143,29 @@ public class ProfilFragment extends Fragment {
                                         Rezervare rezervare = new Rezervare(numeTeren, ore, dataRezervare);
                                         String dataAzi = getDataAzi();
 
-                                        if(comparaData(dataAzi, rezervare.getData())){
-                                            rezervariActive.add(rezervare);
-                                        } else {
-                                            rezervariTrecute.add(rezervare);
-                                        }
+                                        reff.child("Users").child(nume).child("rezervari").child(dataRezervare).child(numeTeren).child("status").addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                String status = (String) snapshot.getValue();
 
+                                                if(comparaData(dataAzi, rezervare.getData())){
+                                                    if(status.equals("activa")){
+                                                        rezervariActive.add(rezervare);
+                                                    } else {
+                                                        rezervariAnulate.add(rezervare);
+                                                    }
+                                                } else {
+                                                    rezervariTrecute.add(rezervare);
+                                                }
 
-                                        myCallback.onCallback(rezervariActive, rezervariTrecute);
+                                                myCallback.onCallback(rezervariActive, rezervariTrecute, rezervariAnulate);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
                                     }
 
                                     @Override
@@ -170,6 +189,17 @@ public class ProfilFragment extends Fragment {
 
             }
         });
+    }
+
+    public List<Rezervare> verificaRezervariAnulate(List<Rezervare> rezervari){
+        List<Rezervare> rezervariAnulate = new ArrayList<>();
+        for(Rezervare rezervare : rezervari){
+            if(rezervare.isEsteAnulata()){
+                rezervari.add(rezervare);
+            }
+        }
+
+        return rezervariAnulate;
     }
 
 }

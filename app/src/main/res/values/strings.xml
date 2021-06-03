@@ -87,4 +87,6 @@
     <string name="data_rezervare">Data rezervare</string>
     <string name="rezervari_trecute">Rezervari trecute</string>
     <string name="anulat">Rezervare anulata</string>
+    <string name="da">Da</string>
+    <string name="nu">Nu</string>
 </resources>

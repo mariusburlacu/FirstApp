@@ -1,7 +1,11 @@
 package com.example.firstapp;
 
+import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,12 +34,16 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
     private Context context;
     private LayoutInflater inflater;
     private String numeUtilizator;
+    private String status;
+
+    private Rezervare rezervare = new Rezervare();
 
     private DatabaseReference reff;
 
-    public RecyclerViewAdapterRezervare(List<Rezervare> rezervari, Context context) {
+    public RecyclerViewAdapterRezervare(List<Rezervare> rezervari, Context context, String numeUtilizator) {
         this.rezervari = rezervari;
         this.context = context;
+        this.numeUtilizator = numeUtilizator;
         this.inflater = LayoutInflater.from(context);
     }
 
@@ -47,7 +57,7 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public void onBindViewHolder(@NonNull RecycleViewHolder holder, int position) {
-        Rezervare rezervare = rezervari.get(position);
+        rezervare = rezervari.get(position);
 
         reff = FirebaseDatabase.getInstance().getReference();
 
@@ -57,10 +67,10 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
 
         List<String> listaOre = rezervare.getOre();
 
-        StringBuilder strbul=new StringBuilder();
+        StringBuilder strbul = new StringBuilder();
 
-        for(int i=0; i<listaOre.size(); i++){
-            if(i == listaOre.size()-1){
+        for(int i=0; i<listaOre.size(); i++) {
+            if (i == listaOre.size() - 1) {
                 strbul.append(listaOre.get(i));
             } else {
                 strbul.append(listaOre.get(i));
@@ -70,35 +80,48 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
 
         holder.tv_ora.setText(strbul);
 
-        if (rezervare.isEsteAnulata()) {
-            holder.btn_anuleaza.setText(R.string.anulat);
-            holder.btn_anuleaza.setBackgroundColor(holder.itemView.getResources().getColor(R.color.red));
-            holder.isCanceled = true;
-        } else {
-            holder.btn_anuleaza.setText(R.string.anuleaza_rezervare);
-            holder.btn_anuleaza.setBackgroundColor(holder.itemView.getResources().getColor(R.color.teal_700));
-            holder.isCanceled = false;
-        }
-
-        holder.btn_anuleaza.setOnClickListener(new View.OnClickListener() {
+        getStatus(rezervare, new StatusCallback() {
             @Override
-            public void onClick(View view) {
-                if(rezervare.isEsteAnulata()){
+            public void onCallback(String value) {
+                status = value;
+
+                if (!(status.equals("activa"))) {
                     holder.btn_anuleaza.setText(R.string.anulat);
-                    holder.btn_anuleaza.setBackgroundColor(view.getResources().getColor(R.color.red));
-                    rezervare.setEsteAnulata(false);
-                    holder.isCanceled = false;
+                    holder.btn_anuleaza.setBackgroundColor(holder.itemView.getResources().getColor(R.color.red));
+                    holder.btn_anuleaza.setEnabled(false);
                 } else {
                     holder.btn_anuleaza.setText(R.string.anuleaza_rezervare);
-                    holder.btn_anuleaza.setBackgroundColor(view.getResources().getColor(R.color.teal_700));
-//                    Map<String, Boolean> ore = reff.child("Users").child(numeUtilizator).child("rezervari").child(rezervare.ge)
-                    rezervare.setEsteAnulata(true);
-                    holder.isCanceled = true;
+                    holder.btn_anuleaza.setBackgroundColor(holder.itemView.getResources().getColor(R.color.teal_700));
                 }
+
+                holder.btn_anuleaza.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.v("status", status);
+                        new AlertDialog.Builder(view.getContext()).setTitle("Anulare rezervare").setMessage("Sunteti sigur ca doriti anularea rezervarii?")
+                            .setPositiveButton(R.string.da, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                holder.btn_anuleaza.setText(R.string.anulat);
+                                holder.btn_anuleaza.setBackgroundColor(view.getResources().getColor(R.color.red));
+                                holder.btn_anuleaza.setEnabled(false);
+                                reff.child("Users").child(numeUtilizator).child("rezervari").child(rezervare.getData()).child(rezervare.getNumeTeren()).child("status").setValue("anulata");
+                                rezervare.setEsteAnulata(false);
+                            }
+                        }).setNegativeButton(R.string.nu, null).show();
+
+//                        else {
+//                            holder.btn_anuleaza.setText(R.string.anuleaza_rezervare);
+//                            holder.btn_anuleaza.setBackgroundColor(view.getResources().getColor(R.color.teal_700));
+//                            reff.child("Users").child(numeUtilizator).child("rezervari").child(rezervare.getData()).child(rezervare.getNumeTeren()).child("status").setValue("activa");
+//                            rezervare.setEsteAnulata(true);
+//                        }
+                    }
+                });
             }
         });
-    }
 
+    }
 
     @Override
     public int getItemCount() {
@@ -135,8 +158,23 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
         }
     }
 
+    public interface StatusCallback {
+        void onCallback(String value);
+    }
 
+    public void getStatus(Rezervare rezervare, StatusCallback myCallback){
+        reff.child("Users").child(numeUtilizator).child("rezervari").child(rezervare.getData()).child(rezervare.getNumeTeren()).child("status").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String status = (String) snapshot.getValue();
 
+                myCallback.onCallback(status);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
 }

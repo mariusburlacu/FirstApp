@@ -188,7 +188,8 @@ public class InchiriazaTeren extends AppCompatActivity {
                                     ore.put((String) oreAdapter.getItem(i), true);
 //                                    reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").updateChildren(ore);
                                     reff.child("Rezervari").child(data).child("Fotbal").child(nume_teren_extra).updateChildren(ore);
-                                    reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).updateChildren(ore);
+                                    reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("ore").updateChildren(ore);
+                                    reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("status").setValue("activa");
                                 }
                             }
                             lv_ore.clearChoices();
