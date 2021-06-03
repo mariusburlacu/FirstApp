@@ -73,12 +73,6 @@ public class FotbalFragment extends Fragment {
                 Log.v("select", sectorSpinner);
 
                 rv_terenuri.setLayoutManager(new LinearLayoutManager(adapterView.getContext()));
-//                List<Sport> terenuri_s1 = readSector(1);
-//                List<Sport> terenuri_s2 = readSector(2);
-//                List<Sport> terenuri_s3 = readSector(3);
-//                List<Sport> terenuri_s4 = readSector(4);
-//                List<Sport> terenuri_s5 = readSector(5);
-//                List<Sport> terenuri_s6 = readSector(6);
 
 
                 if(sectorSpinner.equals("Sector 1")){

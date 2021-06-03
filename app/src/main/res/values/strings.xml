@@ -76,4 +76,15 @@
         <item>20:00 - 21:00</item>
         <item>21:00 - 22:00</item>
     </string-array>
+    <string name="title_activity_profil">ProfilActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="rezervari_active">Rezervari active</string>
+    <string name="rezervari_anulate">Rezervari anulate</string>
+    <string name="rezervari_onorate">Rezervari onorate</string>
+    <string name="anuleaza_rezervare">Anuleaza rezervarea</string>
+    <string name="ore">Ore</string>
+    <string name="data_rezervare">Data rezervare</string>
+    <string name="rezervari_trecute">Rezervari trecute</string>
+    <string name="anulat">Rezervare anulata</string>
 </resources>

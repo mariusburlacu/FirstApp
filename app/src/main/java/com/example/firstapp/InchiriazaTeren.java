@@ -85,33 +85,6 @@ public class InchiriazaTeren extends AppCompatActivity {
 
         oreDisponibileAzi();
 
-//        zi_inchiriere.init(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), new DatePicker.OnDateChangedListener() {
-//            @Override
-//            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
-//                ArrayAdapter<CharSequence> oreRecreate = ArrayAdapter.createFromResource(datePicker.getContext(), R.array.ore, android.R.layout.simple_list_item_multiple_choice);
-//                lv_ore.setAdapter(oreRecreate);
-//                List<String> oreLista = Arrays.asList(getResources().getStringArray(R.array.ore));
-//                String dataSelectata = i2+"-"+(i1+1)+"-"+i;
-//                getOreFromFirebase(dataSelectata,new OreListCallback() {
-//                    @Override
-//                    public void onCallback(List<String> value) {
-//                        int i = 0;
-//                        Log.v("ore", value.toString());
-//                        List<Integer> listaIndex = new ArrayList<>();
-//                        listaIndex = getSameIndexes(value, oreLista);
-//                        for(int index : listaIndex){
-//                            View child = lv_ore.getChildAt(index);
-//                            child.setBackgroundColor(getResources().getColor(R.color.common_google_signin_btn_text_dark_disabled));
-//                            child.setEnabled(false);
-//                            child.setOnClickListener(null);
-//                        }
-//                        listaIndex.clear();
-//                        value.clear();
-//                    }
-//
-//                });
-//            }
-//        });
 
         reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("tipTeren").addValueEventListener(new ValueEventListener() {
             @Override
@@ -290,21 +263,6 @@ public class InchiriazaTeren extends AppCompatActivity {
 
             }
         });
-//        reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        boolean ora = (boolean) dataSnapshot.getValue();
-//                        ore_ocupate_baza_de_date.add(ora);
-//                    }
-//                    myCallback.onCallback(ore_ocupate_baza_de_date);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
     }
 
     public List<Integer> getSameIndexes(List<String> arr1, List<String> arr2) {
