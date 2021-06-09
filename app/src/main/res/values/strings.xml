@@ -89,4 +89,10 @@
     <string name="anulat">Rezervare anulata</string>
     <string name="da">Da</string>
     <string name="nu">Nu</string>
+    <string name="imagineTeren">Poza teren</string>
+    <string name="rezervare_expirata">Rezervare expirata</string>
+    <string name="nu_exista_rezervari_active">Nu exista rezervari active!</string>
+    <string name="nu_exista_rezervari_anulate">Nu ati anulat nicio rezervare!</string>
+    <string name="nu_exista_rezervari_trecute">Nu aveti nicio rezervare in trecut!</string>
+    <string name="catreMaps">Navigheaza</string>
 </resources>

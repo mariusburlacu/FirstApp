@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,6 +45,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tv_nume_teren.setText(teren.getNume());
         holder.tv_adresa_teren.setText(teren.getAdresa());
 
+        Picasso.get().load(teren.getImagine()).into(holder.imagineTeren);
+
         holder.btn_inchiriaza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView tv_nume_teren;
         public TextView tv_adresa_teren;
         public Button btn_inchiriaza;
+        public ImageView imagineTeren;
 
 
         public RecycleViewHolder(@NonNull View itemView){
@@ -72,6 +78,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tv_nume_teren = itemView.findViewById(R.id.tv_nume_teren);
             tv_adresa_teren = itemView.findViewById(R.id.tv_adresa_teren);
             btn_inchiriaza = itemView.findViewById(R.id.btn_inchiriaza);
+            imagineTeren = itemView.findViewById(R.id.pozaTeren);
+
         }
     }
 }

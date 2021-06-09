@@ -8,6 +8,7 @@ public class Sport {
     private String adresa;
     private String tipTeren;
     private String pret;
+    private String imagine;
 //    private String oreOcupate;
 
     public Sport() {
@@ -19,6 +20,14 @@ public class Sport {
         this.tipTeren = tipTeren;
         this.pret = pret;
 //        this.oreOcupate = oreOcupate;
+    }
+
+    public String getImagine() {
+        return imagine;
+    }
+
+    public void setImagine(String imagine) {
+        this.imagine = imagine;
     }
 
     public String getNume() {

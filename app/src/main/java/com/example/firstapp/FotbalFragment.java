@@ -221,5 +221,4 @@ public class FotbalFragment extends Fragment {
             }
         });
     }
-
 }

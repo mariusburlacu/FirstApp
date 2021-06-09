@@ -12,11 +12,12 @@ public class Rezervare {
     public Rezervare() {
     }
 
-    public Rezervare(String numeTeren, List<String> ore, String data) {
+    public Rezervare(String numeTeren, List<String> ore, String data, String adresaTeren) {
         this.numeTeren = numeTeren;
         this.ore = ore;
         this.data = data;
         this.esteAnulata = false;
+        this.adresaTeren = adresaTeren;
     }
 
     public boolean isEsteAnulata() {

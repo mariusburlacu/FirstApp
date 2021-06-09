@@ -164,7 +164,7 @@ public class InchiriazaTeren extends AppCompatActivity {
             public void onClick(View view) {
 //                String data = String.valueOf(zi_inchiriere.getDayOfMonth())+"-"+String.valueOf(zi_inchiriere.getMonth()+1)+"-"+String.valueOf(zi_inchiriere.getYear());
                 String data = et_zi.getText().toString(); // AM INLOCUIT CU DATA DE LA DATEPICKER DIALOG
-                getOreFromFirebase("sa",new OreListCallback() {
+                getOreFromFirebase(data,new OreListCallback() {
                     @Override
                     public void onCallback(List<String> value) {
                         Log.v("ore",ore_ocupate.toString());
@@ -190,6 +190,7 @@ public class InchiriazaTeren extends AppCompatActivity {
                                     reff.child("Rezervari").child(data).child("Fotbal").child(nume_teren_extra).updateChildren(ore);
                                     reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("ore").updateChildren(ore);
                                     reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("status").setValue("activa");
+                                    reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("adresa").setValue(adresa_teren.getText().toString());
                                 }
                             }
                             lv_ore.clearChoices();
@@ -253,8 +254,12 @@ public class InchiriazaTeren extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String ora = (String) dataSnapshot.getKey();
-                    ore_ocupate_baza_de_date.add(ora);
+                    Boolean value = (Boolean) dataSnapshot.getValue();
+                    if(value){
+                        String ora = (String) dataSnapshot.getKey();
+                        ore_ocupate_baza_de_date.add(ora);
+                    }
+
                 }
                 myCallback.onCallback(ore_ocupate_baza_de_date);
             }
