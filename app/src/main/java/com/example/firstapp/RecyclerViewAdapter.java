@@ -1,5 +1,6 @@
 package com.example.firstapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.juliomarcos.ImageViewPopUpHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -47,6 +49,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         Picasso.get().load(teren.getImagine()).into(holder.imagineTeren);
 
+        holder.imagineTeren.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImageViewPopUpHelper.enablePopUpOnClick((Activity) view.getContext(), holder.imagineTeren);
+            }
+        });
+
         holder.btn_inchiriaza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putExtra("nume_teren", holder.tv_nume_teren.getText().toString());
                 intent.putExtra("sector_teren", cifraSector);
                 intent.putExtra("numeUtilizator", numeUtilizator);
+                intent.putExtra("tipSport", teren.getTipSport());
                 holder.itemView.getContext().startActivity(intent);
             }
         });

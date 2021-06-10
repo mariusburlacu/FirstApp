@@ -9,17 +9,27 @@ public class Sport {
     private String tipTeren;
     private String pret;
     private String imagine;
+    private String tipSport; // poate sa fie fotbal, handbal, volei, baschet, tenis
 //    private String oreOcupate;
 
     public Sport() {
     }
 
-    public Sport(String nume, String adresa, String tipTeren, String pret) {
+    public Sport(String nume, String adresa, String tipTeren, String pret, String tipSport) {
         this.nume = nume;
         this.adresa = adresa;
         this.tipTeren = tipTeren;
         this.pret = pret;
+        this.tipSport = tipSport;
 //        this.oreOcupate = oreOcupate;
+    }
+
+    public String getTipSport() {
+        return tipSport;
+    }
+
+    public void setTipSport(String tipSport) {
+        this.tipSport = tipSport;
     }
 
     public String getImagine() {

@@ -140,15 +140,10 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
                                 reff.child("Rezervari").child(rezervare.getData()).child("Fotbal").child(rezervare.getNumeTeren()).updateChildren(mapOre);
                                 rezervare.setEsteAnulata(false);
                                 Toast.makeText(view.getContext(), "Anulare cu succes!", Toast.LENGTH_LONG).show();
+
                             }
                         }).setNegativeButton(R.string.nu, null).show();
 
-//                        else {
-//                            holder.btn_anuleaza.setText(R.string.anuleaza_rezervare);
-//                            holder.btn_anuleaza.setBackgroundColor(view.getResources().getColor(R.color.teal_700));
-//                            reff.child("Users").child(numeUtilizator).child("rezervari").child(rezervare.getData()).child(rezervare.getNumeTeren()).child("status").setValue("activa");
-//                            rezervare.setEsteAnulata(true);
-//                        }
                     }
                 });
 
@@ -201,6 +196,7 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
             }
         }
     }
+
 
     public interface StatusCallback {
         void onCallback(String value);

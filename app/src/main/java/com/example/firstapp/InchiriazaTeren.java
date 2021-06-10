@@ -46,6 +46,7 @@ public class InchiriazaTeren extends AppCompatActivity {
     public String nume_teren_extra;
     public String cifra_sector;
     public String numeUtilizator;
+    public String tipSport;
     private List<String> ore_ocupate;
     private Map<String, Object> ore;
     private List<String> ore_ocupate_baza_de_date = new ArrayList<String>();
@@ -64,8 +65,33 @@ public class InchiriazaTeren extends AppCompatActivity {
         nume_teren_extra = getIntent().getStringExtra("nume_teren");
         cifra_sector = getIntent().getStringExtra("sector_teren");
         numeUtilizator = getIntent().getStringExtra("numeUtilizator");
+        tipSport = getIntent().getStringExtra("tipSport");
+
+        switch (tipSport){
+            case "fotbal": {
+                tipSport = "TerenuriFotbal";
+                break;
+            }
+            case "baschet": {
+                tipSport = "TerenuriBaschet";
+                break;
+            }
+            case "volei": {
+                tipSport = "TerenuriVolei";
+                break;
+            }
+            case "tenis": {
+                tipSport = "TerenuriTenis";
+                break;
+            }
+            case "handbal": {
+                tipSport = "TerenuriHandbal";
+                break;
+            }
+        }
 
 
+        Log.v("tipSport", tipSport);
         Log.v("cifra_sector", cifra_sector);
         Log.v("nume_teren_extra", nume_teren_extra);
 
@@ -86,7 +112,7 @@ public class InchiriazaTeren extends AppCompatActivity {
         oreDisponibileAzi();
 
 
-        reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("tipTeren").addValueEventListener(new ValueEventListener() {
+        reff.child(tipSport).child("Sector " + cifra_sector).child(nume_teren_extra).child("tipTeren").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String tipTeren = (String) snapshot.getValue();
@@ -180,7 +206,7 @@ public class InchiriazaTeren extends AppCompatActivity {
                             }
                         }
 
-                        if(existaOraSelectata == true && rg_tip_teren.getCheckedRadioButtonId() != -1){
+                        if(existaOraSelectata == true && rg_tip_teren.getCheckedRadioButtonId() != -1 && !data.equals("Apasati pentru a selecta data pentru rezervare!")){
                             int len = lv_ore.getCount();
                             for(int i = 0; i < len ; i++){
                                 if(checked.get(i)){
@@ -196,10 +222,13 @@ public class InchiriazaTeren extends AppCompatActivity {
                             lv_ore.clearChoices();
                             oreAdapter.notifyDataSetChanged();
 
+                            Log.v("zi", et_zi.getText().toString());
                             Toast.makeText(view.getContext(), "Ati rezervat cu succes!", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(InchiriazaTeren.this, MainActivity2.class);
                             startActivity(intent);
 
+                        } else if(data.equals("Apasati pentru a selecta data pentru rezervare!")){
+                            Toast.makeText(view.getContext(), "Selectati data!", Toast.LENGTH_LONG).show();
                         } else if (rg_tip_teren.getCheckedRadioButtonId() == -1){
                             Toast.makeText(view.getContext(), "Selectati tipul de teren!", Toast.LENGTH_LONG).show();
                         } else if(existaOraSelectata == false || checked.size() == 0) {
@@ -232,7 +261,7 @@ public class InchiriazaTeren extends AppCompatActivity {
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Sport terenCurent = snapshot.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).getValue(Sport.class);
+                Sport terenCurent = snapshot.child(tipSport).child("Sector " + cifra_sector).child(nume_teren_extra).getValue(Sport.class);
                 nume_teren.setText(terenCurent.getNume());
                 adresa_teren.setText(terenCurent.getAdresa());
                 pret_teren.setText(terenCurent.getPret());

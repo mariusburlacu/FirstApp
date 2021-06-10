@@ -81,31 +81,9 @@ public class ProfilFragment extends Fragment {
         rv_rezervari_trecute.setLayoutManager(new LinearLayoutManager(this.getContext()));
         rv_rezervari_anulate.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                getRezervari(numeUtilizator, new RezervariListCallback() {
-                    @Override
-                    public void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute, List<Rezervare> rezervariAnulate) {
-                        if(rezervariActuale.size()>0){
-                            tvFaraRezervariActive.setEnabled(false);
-                            tvFaraRezervariAnulate.setEnabled(false);
-                            tvFaraRezervariTrecute.setEnabled(false);
-                        }
-                        Log.v("rezAc", rezervariActuale.toString());
-                        Log.v("rezTr", rezervariTrecute.toString());
-                        RecyclerViewAdapterRezervare adapter = new RecyclerViewAdapterRezervare(rezervariActuale, view.getContext(), numeUtilizator);
-                        RecyclerViewAdapterRezervare adapter2 = new RecyclerViewAdapterRezervare(rezervariTrecute, view.getContext(), numeUtilizator);
-                        RecyclerViewAdapterRezervare adapter3 = new RecyclerViewAdapterRezervare(rezervariAnulate, view.getContext(), numeUtilizator);
-                        rv_rezervari_active.setAdapter(adapter);
-                        rv_rezervari_trecute.setAdapter(adapter2);
-                        rv_rezervari_anulate.setAdapter(adapter3);
-                    }
-                });
-            }
-        });
+        updateRezervari(view, rv_rezervari_active, rv_rezervari_trecute, rv_rezervari_anulate);
 
-        Thread welcomeThread = new Thread() {
+        Thread loading = new Thread() {
 
             @Override
             public void run() {
@@ -127,9 +105,35 @@ public class ProfilFragment extends Fragment {
                 }
             }
         };
-        welcomeThread.start();
+        loading.start();
 
         Log.v("data-azi", getDataAzi());
+    }
+
+    public void updateRezervari(View view, RecyclerView rv1, RecyclerView rv2, RecyclerView rv3){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                getRezervari(numeUtilizator, new RezervariListCallback() {
+                    @Override
+                    public void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute, List<Rezervare> rezervariAnulate) {
+                        if(rezervariActuale.size()>0){
+                            tvFaraRezervariActive.setEnabled(false);
+                            tvFaraRezervariAnulate.setEnabled(false);
+                            tvFaraRezervariTrecute.setEnabled(false);
+                        }
+                        Log.v("rezAc", rezervariActuale.toString());
+                        Log.v("rezTr", rezervariTrecute.toString());
+                        RecyclerViewAdapterRezervare adapter = new RecyclerViewAdapterRezervare(rezervariActuale, view.getContext(), numeUtilizator);
+                        rv1.setAdapter(adapter);
+                        adapter = new RecyclerViewAdapterRezervare(rezervariTrecute, view.getContext(), numeUtilizator);
+                        rv2.setAdapter(adapter);
+                        adapter = new RecyclerViewAdapterRezervare(rezervariAnulate, view.getContext(), numeUtilizator);
+                        rv3.setAdapter(adapter);
+                    }
+                });
+            }
+        });
     }
 
     public String getDataAzi(){
@@ -145,9 +149,9 @@ public class ProfilFragment extends Fragment {
         String[] dataCurenta = dataAzi.split("\\-");
         String[] dataBazaDeDate = dataFirebase.split("\\-");
 
-        Log.v("luna", dataCurenta[0] + " " + dataBazaDeDate[0]);
-        Log.v("luna", dataCurenta[1] + " " + dataBazaDeDate[1]);
-        Log.v("luna", dataCurenta[2] + " " + dataBazaDeDate[2]);
+//        Log.v("luna", dataCurenta[0] + " " + dataBazaDeDate[0]);
+//        Log.v("luna", dataCurenta[1] + " " + dataBazaDeDate[1]);
+//        Log.v("luna", dataCurenta[2] + " " + dataBazaDeDate[2]);
 
         if(Integer.parseInt(dataBazaDeDate[2]) > Integer.parseInt(dataCurenta[2])) {
             return true;
