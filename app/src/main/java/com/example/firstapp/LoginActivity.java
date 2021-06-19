@@ -204,7 +204,7 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setText(pass_pref);
         }
         if(preferences.contains(CHECK)) {
-            Boolean checked = preferences.getBoolean(CHECK, false);
+            boolean checked = preferences.getBoolean(CHECK, false);
             checkBox.setChecked(checked);
         }
     }

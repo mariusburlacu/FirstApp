@@ -2,6 +2,7 @@ package com.example.firstapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -49,7 +50,7 @@ public class SendEmail extends Activity {
         String text = et_Mail.getText().toString();
 
         intentEmail.putExtra(Intent.EXTRA_EMAIL, emailTo);
-        intentEmail.putExtra(Intent.EXTRA_SUBJECT, "Problema");
+        intentEmail.putExtra(Intent.EXTRA_SUBJECT, "Problema aplicatia Sportdeck");
         intentEmail.putExtra(Intent.EXTRA_TEXT, text);
 
         try {

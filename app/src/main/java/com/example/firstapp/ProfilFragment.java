@@ -149,10 +149,6 @@ public class ProfilFragment extends Fragment {
         String[] dataCurenta = dataAzi.split("\\-");
         String[] dataBazaDeDate = dataFirebase.split("\\-");
 
-//        Log.v("luna", dataCurenta[0] + " " + dataBazaDeDate[0]);
-//        Log.v("luna", dataCurenta[1] + " " + dataBazaDeDate[1]);
-//        Log.v("luna", dataCurenta[2] + " " + dataBazaDeDate[2]);
-
         if(Integer.parseInt(dataBazaDeDate[2]) > Integer.parseInt(dataCurenta[2])) {
             return true;
         } else {
@@ -300,7 +296,6 @@ public class ProfilFragment extends Fragment {
         LatLng p1 = null;
 
         try {
-            // May throw an IOException
             address = coder.getFromLocationName(strAddress, 5);
             if (address == null) {
                 return null;

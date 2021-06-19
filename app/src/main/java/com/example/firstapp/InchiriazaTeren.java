@@ -279,7 +279,7 @@ public class InchiriazaTeren extends AppCompatActivity {
     }
 
     public void getOreFromFirebase(String data, final OreListCallback myCallback){
-        reff.child("Rezervari").child(data).child("Fotbal").child(nume_teren_extra).addListenerForSingleValueEvent(new ValueEventListener() {
+        reff.child("Rezervari").child(data).child(tipSport).child(nume_teren_extra).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
