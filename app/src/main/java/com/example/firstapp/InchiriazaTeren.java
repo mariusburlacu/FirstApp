@@ -47,6 +47,7 @@ public class InchiriazaTeren extends AppCompatActivity {
     public String cifra_sector;
     public String numeUtilizator;
     public String tipSport;
+    private String tipSportRezervare;
     private List<String> ore_ocupate;
     private Map<String, Object> ore;
     private List<String> ore_ocupate_baza_de_date = new ArrayList<String>();
@@ -90,6 +91,7 @@ public class InchiriazaTeren extends AppCompatActivity {
             }
         }
 
+        tipSportRezervare = tipSport.substring(8);
 
         Log.v("tipSport", tipSport);
         Log.v("cifra_sector", cifra_sector);
@@ -213,7 +215,7 @@ public class InchiriazaTeren extends AppCompatActivity {
                                     ore_ocupate.add((String) oreAdapter.getItem(i));
                                     ore.put((String) oreAdapter.getItem(i), true);
 //                                    reff.child("TerenuriFotbal").child("Sector " + cifra_sector).child(nume_teren_extra).child("oreSelectate").updateChildren(ore);
-                                    reff.child("Rezervari").child(data).child("Fotbal").child(nume_teren_extra).updateChildren(ore);
+                                    reff.child("Rezervari").child(data).child(tipSportRezervare).child(nume_teren_extra).updateChildren(ore);
                                     reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("ore").updateChildren(ore);
                                     reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("status").setValue("activa");
                                     reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("adresa").setValue(adresa_teren.getText().toString());
@@ -279,7 +281,7 @@ public class InchiriazaTeren extends AppCompatActivity {
     }
 
     public void getOreFromFirebase(String data, final OreListCallback myCallback){
-        reff.child("Rezervari").child(data).child(tipSport).child(nume_teren_extra).addListenerForSingleValueEvent(new ValueEventListener() {
+        reff.child("Rezervari").child(data).child(tipSportRezervare).child(nume_teren_extra).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {

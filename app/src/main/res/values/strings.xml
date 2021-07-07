@@ -95,4 +95,31 @@
     <string name="nu_exista_rezervari_anulate">Nu ati anulat nicio rezervare!</string>
     <string name="nu_exista_rezervari_trecute">Nu aveti nicio rezervare in trecut!</string>
     <string name="catreMaps">Navigheaza</string>
+    <string name="notaParola">Nota: parola trebuie sa aiba minim 8 caractere!</string>
+    <string name="reguli">Reguli de joc</string>
+
+    <string name="reguliTenis">Pentru a intelege mai bine regulile tenisului de camp, in primul rand trebuie sa te familiarizezi cu termenii folositi, putand astfel sa urmaresti mai usor, fiind si primele lectii de la un club.
+
+ – punct: se foloseste pentru a numara in cadrul unei partide de tenis, fiind o unitate de baza, si se intinde de cand se pune mingea in joc, pana la prima greseala a unuia dintre participanti.
+
+ – ghem (game): este tot o unitate de masura, folosit pentru tine scorul, se refera la joc;
+
+ – brec (break): se refera la ghemul obtinut atunci cand serveste adversarul;
+
+ – egalitate: cand sunt rezultate egale si jucatorul trebuie sa castige doua puncte consecutive pentru a castiga ghemul;
+
+ – avantaj: poate fi la serviciu, cand cel care castiga punctul la 40 – 40 este cel care serveste, sau la primire, cand castiga punctul pe serva celuilalt;
+
+ – tie break: este un sistem de punctare, ce se foloseste la scorul de 6 – 6, pentru a elimina prelungirile. Acest ghem de tiebreak are ca scop obtinerea a 7 puncte, cu doua avans.
+
+ – dubla greseala: se considera atunci cand jucatorul greseste ambele serve.
+
+ – afara (out): este momentul in care mingea iese in afara terenului de joc.
+    Un meci de tenis cuprinde seturi a cate sase ghem-uri. La final, se joaca si un tie break, ce are 12 puncte. Se pot juca 3 sau 5 seturi si nu exista un termen limita, durata fiind variabila.
+
+Cel care castiga primul la sase ghem-uri, la o diferenta de minim 2 puncte, va fi considerat castigator. In caz ca jucatorii sunt la egalitate, se trece la tie break pentru departajare.
+
+Cum se tine un scor tenis? Pentru un joc standard ai: nici un punct echivalent cu 0; primul punct obtinut se noteaza cu 15; al doilea este notat cu 30; cel de-al treilea acumuleaza 40; al patrulea este considerat game, la o diferenta de minim 2 puncte.
+
+Urmarind aceste reguli tenis, vei afla cum se tine scorul si cum se procedeaza in situatii de egalitate. Astfel, daca este egalitate, scorul va fi de avantaj pentru cel care castiga urmatorul punct. Si aici sunt doua situatii: daca cel care este in avantaj castiga si urmatorul punct, atunci este ghem pentru el, daca adversarul va castiga punctul ce urmeaza se trece din nou in starea de egalitate.</string>
 </resources>

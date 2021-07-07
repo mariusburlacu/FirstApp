@@ -1,9 +1,14 @@
 package com.example.firstapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -38,6 +43,12 @@ public class FotbalFragment extends Fragment {
     private DatabaseReference reff;
     public List<Sport> terenuri = new ArrayList<>();
     public String numeUtilizator;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
@@ -157,7 +168,31 @@ public class FotbalFragment extends Fragment {
 
     }
 
-//    public List<Sport> readSector(int sector){
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.main_activity2, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.reguli:
+                AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
+                alertDialog.setTitle("Reguli de joc");
+                alertDialog.setMessage("awidboadibaowdbiawbodsio");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    //    public List<Sport> readSector(int sector){
 //        reff.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot snapshot) {

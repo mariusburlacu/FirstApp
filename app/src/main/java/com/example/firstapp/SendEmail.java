@@ -42,7 +42,7 @@ public class SendEmail extends Activity {
     }
 
     private void sendEmail() {
-        String[] emailTo = {"marius.bm29@gmail.com"};
+        String[] emailTo = {"sportdeck.sup@gmail.com"};
         Intent intentEmail = new Intent(Intent.ACTION_SEND);
         intentEmail.setData(Uri.parse("mailto:"));
         intentEmail.setType("text/plain");
