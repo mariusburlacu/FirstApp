@@ -111,7 +111,7 @@ public class InchiriazaTeren extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
-        oreDisponibileAzi();
+//        oreDisponibileAzi();
 
 
         reff.child(tipSport).child("Sector " + cifra_sector).child(nume_teren_extra).child("tipTeren").addValueEventListener(new ValueEventListener() {
@@ -218,6 +218,7 @@ public class InchiriazaTeren extends AppCompatActivity {
                                     reff.child("Rezervari").child(data).child(tipSportRezervare).child(nume_teren_extra).updateChildren(ore);
                                     reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("ore").updateChildren(ore);
                                     reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("status").setValue("activa");
+                                    reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("tipSport").setValue(tipSportRezervare);
                                     reff.child("Users").child(numeUtilizator).child("rezervari").child(data).child(nume_teren_extra).child("adresa").setValue(adresa_teren.getText().toString());
                                 }
                             }

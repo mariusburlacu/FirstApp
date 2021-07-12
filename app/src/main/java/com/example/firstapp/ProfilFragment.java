@@ -48,7 +48,6 @@ public class ProfilFragment extends Fragment {
 
     public List<String> dateRezervari = new ArrayList<>();
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,8 +63,8 @@ public class ProfilFragment extends Fragment {
 
         numeUtilizator = (getActivity().getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE));
 
-        LatLng locatie = getLocationFromAddress(view.getContext(), "Str. Primo Nebiolo, nr. 2, sector 1, Bucuresti");
-        Log.v("locatie", locatie.toString());
+//        LatLng locatie = getLocationFromAddress(view.getContext(), "Str. Primo Nebiolo, nr. 2, sector 1, Bucuresti");
+//        Log.v("locatie", locatie.toString());
 
         tvFaraRezervariActive = view.findViewById(R.id.tv_nuExista_rezervariActive);
         tvFaraRezervariAnulate = view.findViewById(R.id.tv_nuExista_rezervariAnulate);
@@ -81,7 +80,28 @@ public class ProfilFragment extends Fragment {
         rv_rezervari_trecute.setLayoutManager(new LinearLayoutManager(this.getContext()));
         rv_rezervari_anulate.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        updateRezervari(view, rv_rezervari_active, rv_rezervari_trecute, rv_rezervari_anulate);
+        getRezervari(numeUtilizator, new RezervariListCallback() {
+            @Override
+            public void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute, List<Rezervare> rezervariAnulate) {
+                if(rezervariActuale.size()>0){
+                    tvFaraRezervariActive.setEnabled(false);
+                    tvFaraRezervariAnulate.setEnabled(false);
+                    tvFaraRezervariTrecute.setEnabled(false);
+                }
+
+                Log.v("rezAc", rezervariActuale.toString());
+                Log.v("rezTr", rezervariTrecute.toString());
+
+                RecyclerViewAdapterRezervare adapter = new RecyclerViewAdapterRezervare(rezervariActuale, view.getContext(), numeUtilizator);
+                rv_rezervari_active.setAdapter(adapter);
+                adapter = new RecyclerViewAdapterRezervare(rezervariTrecute, view.getContext(), numeUtilizator);
+                rv_rezervari_trecute.setAdapter(adapter);
+                adapter = new RecyclerViewAdapterRezervare(rezervariAnulate, view.getContext(), numeUtilizator);
+                rv_rezervari_anulate.setAdapter(adapter);
+            }
+        });
+
+//        updateRezervari(view, rv_rezervari_active, rv_rezervari_trecute, rv_rezervari_anulate);
 
         Thread loading = new Thread() {
 
@@ -110,28 +130,25 @@ public class ProfilFragment extends Fragment {
         Log.v("data-azi", getDataAzi());
     }
 
-    public void updateRezervari(View view, RecyclerView rv1, RecyclerView rv2, RecyclerView rv3){
-        AsyncTask.execute(new Runnable() {
+    public void updateRezervari(View view, RecyclerView activeBookingsRecycler, RecyclerView pastBookingsRecycler, RecyclerView cancelledBookingsRecycler){
+        getRezervari(numeUtilizator, new RezervariListCallback() {
             @Override
-            public void run() {
-                getRezervari(numeUtilizator, new RezervariListCallback() {
-                    @Override
-                    public void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute, List<Rezervare> rezervariAnulate) {
-                        if(rezervariActuale.size()>0){
-                            tvFaraRezervariActive.setEnabled(false);
-                            tvFaraRezervariAnulate.setEnabled(false);
-                            tvFaraRezervariTrecute.setEnabled(false);
-                        }
-                        Log.v("rezAc", rezervariActuale.toString());
-                        Log.v("rezTr", rezervariTrecute.toString());
-                        RecyclerViewAdapterRezervare adapter = new RecyclerViewAdapterRezervare(rezervariActuale, view.getContext(), numeUtilizator);
-                        rv1.setAdapter(adapter);
-                        adapter = new RecyclerViewAdapterRezervare(rezervariTrecute, view.getContext(), numeUtilizator);
-                        rv2.setAdapter(adapter);
-                        adapter = new RecyclerViewAdapterRezervare(rezervariAnulate, view.getContext(), numeUtilizator);
-                        rv3.setAdapter(adapter);
-                    }
-                });
+            public void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute, List<Rezervare> rezervariAnulate) {
+                if(rezervariActuale.size()>0){
+                    tvFaraRezervariActive.setEnabled(false);
+                    tvFaraRezervariAnulate.setEnabled(false);
+                    tvFaraRezervariTrecute.setEnabled(false);
+                }
+
+                Log.v("rezAc", rezervariActuale.toString());
+                Log.v("rezTr", rezervariTrecute.toString());
+
+                RecyclerViewAdapterRezervare adapter = new RecyclerViewAdapterRezervare(rezervariActuale, view.getContext(), numeUtilizator);
+                activeBookingsRecycler.setAdapter(adapter);
+                adapter = new RecyclerViewAdapterRezervare(rezervariTrecute, view.getContext(), numeUtilizator);
+                pastBookingsRecycler.setAdapter(adapter);
+                adapter = new RecyclerViewAdapterRezervare(rezervariAnulate, view.getContext(), numeUtilizator);
+                cancelledBookingsRecycler.setAdapter(adapter);
             }
         });
     }
@@ -194,6 +211,28 @@ public class ProfilFragment extends Fragment {
         void onCallbackAdresa(String value);
     }
 
+    public void getTipSport(String nume, String data, String numeTeren, TipSportCallback callback){
+        reff.child("Users").child(nume).child("rezervari").child(data).child(numeTeren).child("tipSport").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for(DataSnapshot data : snapshot.getChildren()){
+//                    String adresa = data.getKey();
+//                }
+                String tipSport = (String) snapshot.getValue();
+                callback.onCallbackTipSport(tipSport);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public interface TipSportCallback {
+        void onCallbackTipSport(String tipSport);
+    }
+
     public interface RezervariListCallback {
         void onCallback(List<Rezervare> rezervariActuale, List<Rezervare> rezervariTrecute, List<Rezervare> rezervariAnulate);
     }
@@ -207,8 +246,8 @@ public class ProfilFragment extends Fragment {
                     dateRezervari.add(dataRezervare);
 
                     reff.child("Users").child(nume).child("rezervari").child(dataRezervare).addListenerForSingleValueEvent(new ValueEventListener() {
-                       @Override
-                       public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for(DataSnapshot data : snapshot.getChildren()){
                                 String numeTeren = data.getKey();
 
@@ -262,11 +301,11 @@ public class ProfilFragment extends Fragment {
                                     }
                                 });
                             }
-                       }
+                        }
 
-                       @Override
-                       public void onCancelled(@NonNull DatabaseError error) {
-                       }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
                     });
                 }
             }

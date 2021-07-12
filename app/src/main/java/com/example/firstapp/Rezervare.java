@@ -8,6 +8,7 @@ public class Rezervare {
     private List<String> ore;
     private String data;
     private boolean esteAnulata;
+    private String tipSport;
 
     public Rezervare() {
     }
@@ -18,6 +19,14 @@ public class Rezervare {
         this.data = data;
         this.esteAnulata = false;
         this.adresaTeren = adresaTeren;
+    }
+
+    public String getTipSport() {
+        return tipSport;
+    }
+
+    public void setTipSport(String tipSport) {
+        this.tipSport = tipSport;
     }
 
     public boolean isEsteAnulata() {

@@ -15,6 +15,7 @@
         android:weightSum="3"
         android:orientation="horizontal"
         android:gravity="center"
+        android:id="@+id/sectoare_baschet"
         android:layout_marginTop="25dp">
 
         <TextView
@@ -49,5 +50,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/menu_baschet"/>
+        android:text="@string/nu_exista_terenuri"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        android:id="@+id/rv_terenuriBaschet"
+        app:layout_constraintTop_toBottomOf="@+id/sectoare_baschet"
+        android:paddingBottom="65dp"
+        android:layout_marginTop="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

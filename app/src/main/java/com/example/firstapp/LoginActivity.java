@@ -69,10 +69,8 @@ public class LoginActivity extends AppCompatActivity {
 //        ore.put("13:00 - 14:00", true);
 //        ore.put("21:00 - 22:00", true);
 //
-//        reff.child("TerenuriTenis").child("Sector 6").child("As Club Politehnica").child("nume").setValue("As Club Politehnica");
-//        reff.child("TerenuriTenis").child("Sector 6").child("As Club Politehnica").child("pret").setValue("luni - duminica: 50 lei");
-//        reff.child("TerenuriTenis").child("Sector 6").child("As Club Politehnica").child("tipSport").setValue("tenis");
-//        reff.child("TerenuriTenis").child("Sector 6").child("As Club Politehnica").child("tipTeren").setValue("aer liber");
+
+
 //
 //        Date c = Calendar.getInstance().getTime();
 //        Log.v("Current time => ", c.toString());

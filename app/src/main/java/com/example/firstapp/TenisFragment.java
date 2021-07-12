@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ public class TenisFragment extends Fragment {
     private DatabaseReference reff;
     public List<Sport> terenuri = new ArrayList<>();
     public String numeUtilizator;
+    private TextView tvFaraTerenuri;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class TenisFragment extends Fragment {
         numeUtilizator = (getActivity().getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE));
 
         reff = FirebaseDatabase.getInstance().getReference();
+        tvFaraTerenuri = view.findViewById(R.id.text_tenis);
+        tvFaraTerenuri.setVisibility(View.GONE);
 
         RecyclerView rv_terenuri = view.findViewById(R.id.rv_terenuriTenis);
 
@@ -76,10 +80,14 @@ public class TenisFragment extends Fragment {
 
 
                 if(sectorSpinner.equals("Sector 1")){
+                    tvFaraTerenuri.setVisibility(View.GONE);
                     terenuri.clear();
                     getTerenuriFromFirebase(new FotbalFragment.TerenuriListCallback() {
                         @Override
                         public void onCallback(List<Sport> value) {
+                            if(value.size()==0){
+                                tvFaraTerenuri.setVisibility(View.VISIBLE);
+                            }
                             Log.v("Terenuri", value.toString());
                             RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
@@ -87,60 +95,84 @@ public class TenisFragment extends Fragment {
                     }, 1);
 
                 } else if(sectorSpinner.equals("Sector 2")){
+                    tvFaraTerenuri.setVisibility(View.GONE);
                     terenuri.clear();
                     getTerenuriFromFirebase(new FotbalFragment.TerenuriListCallback() {
                         @Override
                         public void onCallback(List<Sport> value) {
+                            if(value.size()==0){
+                                tvFaraTerenuri.setVisibility(View.VISIBLE);
+                            }
                             Log.v("Terenuri", value.toString());
                             RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 2);
                 } else if(sectorSpinner.equals("Sector 3")){
+                    tvFaraTerenuri.setVisibility(View.GONE);
                     terenuri.clear();
                     getTerenuriFromFirebase(new FotbalFragment.TerenuriListCallback() {
                         @Override
                         public void onCallback(List<Sport> value) {
+                            if(value.size()==0){
+                                tvFaraTerenuri.setVisibility(View.VISIBLE);
+                            }
                             Log.v("Terenuri", value.toString());
                             RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 3);
                 } else if(sectorSpinner.equals("Sector 4")){
+                    tvFaraTerenuri.setVisibility(View.GONE);
                     terenuri.clear();
                     getTerenuriFromFirebase(new FotbalFragment.TerenuriListCallback() {
                         @Override
                         public void onCallback(List<Sport> value) {
+                            if(value.size()==0){
+                                tvFaraTerenuri.setVisibility(View.VISIBLE);
+                            }
                             Log.v("Terenuri", value.toString());
                             RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 4);
                 } else if(sectorSpinner.equals("Sector 5")){
+                    tvFaraTerenuri.setVisibility(View.GONE);
                     terenuri.clear();
                     getTerenuriFromFirebase(new FotbalFragment.TerenuriListCallback() {
                         @Override
                         public void onCallback(List<Sport> value) {
+                            if(value.size()==0){
+                                tvFaraTerenuri.setVisibility(View.VISIBLE);
+                            }
                             Log.v("Terenuri", value.toString());
                             RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 5);
                 } else if(sectorSpinner.equals("Sector 6")){
+                    tvFaraTerenuri.setVisibility(View.GONE);
                     terenuri.clear();
                     getTerenuriFromFirebase(new FotbalFragment.TerenuriListCallback() {
                         @Override
                         public void onCallback(List<Sport> value) {
+                            if(value.size()==0){
+                                tvFaraTerenuri.setVisibility(View.VISIBLE);
+                            }
                             Log.v("Terenuri", value.toString());
                             RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
                         }
                     }, 6);
                 } else {
+                    tvFaraTerenuri.setVisibility(View.GONE);
                     terenuri.clear();
                     getTerenuriFromFirebase(new FotbalFragment.TerenuriListCallback() {
                         @Override
                         public void onCallback(List<Sport> value) {
+                            if(value.size()==0){
+                                tvFaraTerenuri.setVisibility(View.VISIBLE);
+                            }
                             Log.v("Terenuri", value.toString());
                             RecyclerViewAdapter adapter = new RecyclerViewAdapter(value, adapterView.getContext(), numeUtilizator);
                             rv_terenuri.setAdapter(adapter);
@@ -167,7 +199,7 @@ public class TenisFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.reguli:
                 AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
-                alertDialog.setTitle("Reguli de joc");
+                alertDialog.setTitle("Reguli de joc - Tenis");
                 alertDialog.setMessage(getResources().getString(R.string.reguliTenis));
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {

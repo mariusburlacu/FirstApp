@@ -122,4 +122,51 @@ Cel care castiga primul la sase ghem-uri, la o diferenta de minim 2 puncte, va f
 Cum se tine un scor tenis? Pentru un joc standard ai: nici un punct echivalent cu 0; primul punct obtinut se noteaza cu 15; al doilea este notat cu 30; cel de-al treilea acumuleaza 40; al patrulea este considerat game, la o diferenta de minim 2 puncte.
 
 Urmarind aceste reguli tenis, vei afla cum se tine scorul si cum se procedeaza in situatii de egalitate. Astfel, daca este egalitate, scorul va fi de avantaj pentru cel care castiga urmatorul punct. Si aici sunt doua situatii: daca cel care este in avantaj castiga si urmatorul punct, atunci este ghem pentru el, daca adversarul va castiga punctul ce urmeaza se trece din nou in starea de egalitate.</string>
+
+    <string name="reguliBaschet">
+        In general, in jocul de baschet sunt 2 echipe formate din cate 5 jucatori fiecare. De asemenea, fiecare echipa are si 5 rezerve.
+
+Deoarece sunt putini jucatori pe teren sunt anumite pozitii baschet care pot fi usor de memorat si anume:
+
+ – conducatorul de joc – ele este creierul echipei, cel care se afla in centru, incepe jocul si coordoneaza;
+
+ – cel mai bun aruncator – acesta sta aproape de linia laterala, fiind cel care inscrie cosuri de 3 puncte;
+
+ – cel mai bun jucator – care se poate plia pe mai multe posturi, fiind si pentru aruncari de 3 puncte si pentru cele din careul adversarilor;
+
+ – cel mai tehnic – marcheaza de obicei aproape de cos, fiind cel mai adesea pozitionat sub panou;
+
+ – centru – se alege in general cel mai inalt si mai puternic jucator din echipa, ce apara propriul cos.
+
+Inlocuirile se pot face foarte usor, dar permanent trebuie sa fie doar 5 jucatori pe teren. Cel care intra in joc trebuie sa o faca doar prin terenul propriu, cel care paraseste suprafata o poate face pe oriunde. Un jucator inlocuit poate sa reintre dupa o perioada de timp, in functie de decizia antrenorului.
+
+Cu siguranta, daca nu joci in competitii, ci doar pentru destindere, poti sa formezi si echipe mai mici, dar sunt si jocuri in doi, de unu la unu, pe care le poti juca si la un singur cos.
+        Valoare cosurilor nu este egala, in baschet, reguli stricte marcheaza fiecare pozitie si numarul de puncte alocat. Astfel sunt:
+
+ – cosuri care aduc 1 punct echipei – inscrise din aruncare libera;
+
+ – cosuri care aduc 2 puncte echipei – ce sunt inscrise in semicerc;
+
+ – cosuri de 3 puncte pentru echipa – sunt cele marcate din afara semicercului.
+
+De asemenea, daca in timpul jocului un jucator inscrie in mod accidental in cosul echipei proprii, se aduna 2 puncte pentru echipa adversa si acest cos se trece la capitanul echipei adverse. Daca se marcheaza in propriul cos cu buna stiinta, acesta nu este luat in seama de arbitri.
+
+Sunt mai multe stiluri de aruncari libere si fiecare isi poate alege cea mai buna varianta pentru el: cu ambele maini de jos, cu mainile de la piept, regula mainii drepte ce pleaca de la umar, fiind o aruncare clasica etc.
+        In baschet sunt numeroase reguli si in continuare amintim cateva dintre ele care sunt cele mai uzuale precum:
+
+Regula pasilor – pivotarea este miscarea cu un picior fix ce are rol de pivot, in timp ce celalat se misca pentru a cauta o pozitie buna pentru aruncare sau un coechipier liber. Daca jucatorul prinde mingea in timp ce este in miscare sau dupa ce a terminat driblingul, mai poate face doi pasi pana sa arunce mingea sau sa se opreasca.
+
+Daca sare cu ambele picioare atunci trebuie sa elibereze mingea inainte ca unul dintre picioare sa atinga solul. La plecarea de pe loc, pasii sunt contorizati, iar pivotul poate fi pe oricare dintre picioare daca din saritura aterizeaza pe amandoua, sau doar pe piciorul care aterizeaza primul, dupa caz.
+
+Regula 3 secunde – cand echipa detine mingea, un jucator nu poate ramane mai mult de 3 secunde in zona restrictivă.
+
+Joc 5 secunde – jucatorul nu poate tine mingea mai mult de 5 secunde in maini, dupa care trebuie sa intreprinda o miscare.
+
+Regula 8 secunde – dupa o repunere sau daca recastiga mingea, echipa are 8 secunde pana sa o treaca in terenul advers.
+
+Regula 24 secunde – din momentul in care mingea intra in posesia unei echipe, fie in urma recastigarii, fie dupa o repunere, aceasta are 24 de secunde pentru a face o aruncare la cosul de baschet din terenul advers.
+
+Mingea nu mai poate fi intoarsa in propriul teren de catre o echipa ce a trecut la atac. Sunt de asemenea diverse greseli ce se sanctioneaza, atat de jucator, cat si de echipa.
+    </string>
+    <string name="nu_exista_terenuri">Nu exista terenuri!</string>
 </resources>

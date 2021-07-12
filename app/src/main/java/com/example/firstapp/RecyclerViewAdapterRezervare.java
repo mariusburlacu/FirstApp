@@ -98,6 +98,13 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
 
         LatLng locatie = getLocationFromAddress(holder.itemView.getContext(), adresaTerenPentruLocatie);
 
+        getTipSport(rezervare, new TipSportCallback() {
+            @Override
+            public void onCallback(String tipSport) {
+                rezervare.setTipSport(tipSport);
+            }
+        });
+
         getStatus(rezervare, new StatusCallback() {
             @Override
             public void onCallback(String value) {
@@ -129,6 +136,7 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View view) {
                         Log.v("status", status);
+                        Log.v("sportAdapter", rezervare.getTipSport());
                         new AlertDialog.Builder(view.getContext()).setTitle("Anulare rezervare").setMessage("Sunteti sigur ca doriti anularea rezervarii?")
                             .setPositiveButton(R.string.da, new DialogInterface.OnClickListener() {
                             @Override
@@ -136,11 +144,17 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
                                 holder.btn_anuleaza.setText(R.string.anulat);
                                 holder.btn_anuleaza.setBackgroundColor(view.getResources().getColor(R.color.red));
                                 holder.btn_anuleaza.setEnabled(false);
-                                reff.child("Users").child(numeUtilizator).child("rezervari").child(rezervare.getData()).child(rezervare.getNumeTeren()).child("status").setValue("anulata");
-                                reff.child("Rezervari").child(rezervare.getData()).child("Fotbal").child(rezervare.getNumeTeren()).updateChildren(mapOre);
-                                rezervare.setEsteAnulata(false);
-                                Toast.makeText(view.getContext(), "Anulare cu succes!", Toast.LENGTH_LONG).show();
 
+                                reff.child("Users").child(numeUtilizator).child("rezervari").child(rezervare.getData()).child(rezervare.getNumeTeren()).child("status").setValue("anulata");
+                                getTipSport(rezervare, new TipSportCallback() {
+                                    @Override
+                                    public void onCallback(String tipSport) {
+                                        reff.child("Rezervari").child(rezervare.getData()).child(tipSport).child(rezervare.getNumeTeren()).updateChildren(mapOre);
+                                        rezervare.setEsteAnulata(false);
+                                        stergeRezervare(rezervare);
+                                        Toast.makeText(view.getContext(), "Anulare cu succes!", Toast.LENGTH_LONG).show();
+                                    }
+                                });
                             }
                         }).setNegativeButton(R.string.nu, null).show();
 
@@ -207,8 +221,26 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String status = (String) snapshot.getValue();
-
                 myCallback.onCallback(status);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public interface TipSportCallback {
+        void onCallback(String tipSport);
+    }
+
+    public void getTipSport(Rezervare rezervare, TipSportCallback myCallback){
+        reff.child("Users").child(numeUtilizator).child("rezervari").child(rezervare.getData()).child(rezervare.getNumeTeren()).child("tipSport").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String tipSport = (String) snapshot.getValue();
+                myCallback.onCallback(tipSport);
             }
 
             @Override
@@ -240,5 +272,15 @@ public class RecyclerViewAdapterRezervare extends RecyclerView.Adapter<RecyclerV
         }
 
         return p1;
+    }
+
+    public void stergeRezervare(Rezervare rezervare){
+        rezervari.remove(rezervare);
+        notifyDataSetChanged();
+    }
+
+    public void adaugaRezervare(Rezervare rezervare){
+        rezervari.add(rezervare);
+        notifyDataSetChanged();
     }
 }
