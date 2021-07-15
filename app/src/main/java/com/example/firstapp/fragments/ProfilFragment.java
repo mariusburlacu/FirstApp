@@ -1,12 +1,9 @@
-package com.example.firstapp;
+package com.example.firstapp.fragments;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +17,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.firstapp.activitati.LoginActivity;
+import com.example.firstapp.R;
+import com.example.firstapp.clase.RecyclerViewAdapterRezervare;
+import com.example.firstapp.clase.Rezervare;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +32,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 public class ProfilFragment extends Fragment {
     private DatabaseReference reff;

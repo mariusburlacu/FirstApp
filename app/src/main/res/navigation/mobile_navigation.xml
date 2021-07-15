@@ -7,37 +7,37 @@
 
     <fragment
         android:id="@+id/nav_fotbal"
-        android:name="com.example.firstapp.FotbalFragment"
+        android:name="com.example.firstapp.fragments.FotbalFragment"
         android:label="@string/menu_fotbal"
         tools:layout="@layout/fragment_fotbal" />
 
     <fragment
         android:id="@+id/nav_baschet"
-        android:name="com.example.firstapp.BaschetFragment"
+        android:name="com.example.firstapp.fragments.BaschetFragment"
         android:label="@string/menu_baschet"
         tools:layout="@layout/fragment_baschet" />
 
     <fragment
         android:id="@+id/nav_volei"
-        android:name="com.example.firstapp.VoleiFragment"
+        android:name="com.example.firstapp.fragments.VoleiFragment"
         android:label="@string/menu_volei"
         tools:layout="@layout/fragment_volei" />
 
     <fragment
         android:id="@+id/nav_handbal"
-        android:name="com.example.firstapp.HandbalFragment"
+        android:name="com.example.firstapp.fragments.HandbalFragment"
         android:label="@string/menu_handbal"
         tools:layout="@layout/fragment_handbal" />
 
     <fragment
         android:id="@+id/nav_tenis"
-        android:name="com.example.firstapp.TenisFragment"
+        android:name="com.example.firstapp.fragments.TenisFragment"
         android:label="@string/menu_tenis"
         tools:layout="@layout/fragment_tenis" />
 
     <fragment
         android:id="@+id/nav_profil"
-        android:name="com.example.firstapp.ProfilFragment"
+        android:name="com.example.firstapp.fragments.ProfilFragment"
         android:label="@string/menu_profil"
         tools:layout="@layout/fragment_profil" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.firstapp;
+package com.example.firstapp.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,6 +23,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.firstapp.activitati.LoginActivity;
+import com.example.firstapp.R;
+import com.example.firstapp.clase.RecyclerViewAdapter;
+import com.example.firstapp.clase.Sport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +36,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TenisFragment extends Fragment {
+public class HandbalFragment extends Fragment {
+
     private DatabaseReference reff;
     public List<Sport> terenuri = new ArrayList<>();
     public String numeUtilizator;
@@ -47,7 +52,7 @@ public class TenisFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tenis, container, false);
+        View view = inflater.inflate(R.layout.fragment_handbal, container, false);
         return view;
     }
 
@@ -58,10 +63,11 @@ public class TenisFragment extends Fragment {
         numeUtilizator = (getActivity().getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE));
 
         reff = FirebaseDatabase.getInstance().getReference();
-        tvFaraTerenuri = view.findViewById(R.id.text_tenis);
+
+        tvFaraTerenuri = view.findViewById(R.id.text_handbal);
         tvFaraTerenuri.setVisibility(View.GONE);
 
-        RecyclerView rv_terenuri = view.findViewById(R.id.rv_terenuriTenis);
+        RecyclerView rv_terenuri = view.findViewById(R.id.rv_terenuriHandbal);
 
         Spinner spinner = view.findViewById(R.id.spinner_sectoare);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(), R.array.sectoare,
@@ -199,8 +205,8 @@ public class TenisFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.reguli:
                 AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
-                alertDialog.setTitle("Reguli de joc - Tenis");
-                alertDialog.setMessage(getResources().getString(R.string.reguliTenis));
+                alertDialog.setTitle("Reguli de joc - Handbal");
+                alertDialog.setMessage(getResources().getString(R.string.reguliHandbal));
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -220,7 +226,7 @@ public class TenisFragment extends Fragment {
     public void getTerenuriFromFirebase(final FotbalFragment.TerenuriListCallback myCallback, int sector){
         if(sector==0){
             for(int i = 1; i <= 6; i++){
-                reff.child("TerenuriTenis").child("Sector " + i).addListenerForSingleValueEvent(new ValueEventListener() {
+                reff.child("TerenuriHandbal").child("Sector " + i).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
@@ -238,7 +244,7 @@ public class TenisFragment extends Fragment {
                 });
             }
         }
-        reff.child("TerenuriTenis").child("Sector " + sector).addListenerForSingleValueEvent(new ValueEventListener() {
+        reff.child("TerenuriHandbal").child("Sector " + sector).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){

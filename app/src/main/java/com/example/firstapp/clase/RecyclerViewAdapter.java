@@ -1,4 +1,4 @@
-package com.example.firstapp;
+package com.example.firstapp.clase;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.firstapp.R;
+import com.example.firstapp.activitati.InchiriazaTeren;
 import com.juliomarcos.ImageViewPopUpHelper;
 import com.squareup.picasso.Picasso;
 

@@ -16,13 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirstApp">
         <activity
-            android:name=".SendEmail"
+            android:name=".activitati.SendEmail"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
-            android:name=".Signup"
+            android:name=".activitati.Signup"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".activitati.MainActivity2"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.FirstApp.NoActionBar">
             <meta-data
@@ -30,9 +30,9 @@
                 android:value="@string/google_maps_API" />
         </activity>
         <activity
-            android:name=".InchiriazaTeren"
+            android:name=".activitati.InchiriazaTeren"
             android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activitati.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

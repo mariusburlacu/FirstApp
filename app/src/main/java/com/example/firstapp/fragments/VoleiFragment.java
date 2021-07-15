@@ -1,4 +1,4 @@
-package com.example.firstapp;
+package com.example.firstapp.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,6 +23,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.firstapp.activitati.LoginActivity;
+import com.example.firstapp.R;
+import com.example.firstapp.clase.RecyclerViewAdapter;
+import com.example.firstapp.clase.Sport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaschetFragment extends Fragment {
+public class VoleiFragment extends Fragment {
     private DatabaseReference reff;
     public List<Sport> terenuri = new ArrayList<>();
     public String numeUtilizator;
@@ -47,7 +51,7 @@ public class BaschetFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_baschet, container, false);
+        View view = inflater.inflate(R.layout.fragment_volei, container, false);
         return view;
     }
 
@@ -58,12 +62,12 @@ public class BaschetFragment extends Fragment {
         numeUtilizator = (getActivity().getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE));
 
         reff = FirebaseDatabase.getInstance().getReference();
-        tvFaraTerenuri = view.findViewById(R.id.text_baschet);
+        tvFaraTerenuri = view.findViewById(R.id.text_volei);
         tvFaraTerenuri.setVisibility(View.GONE);
 
-        RecyclerView rv_terenuri = view.findViewById(R.id.rv_terenuriBaschet);
+        RecyclerView rv_terenuri = view.findViewById(R.id.rv_terenuriVolei);
 
-        Spinner spinner = view.findViewById(R.id.spinner_sectoare);
+        Spinner spinner = view.findViewById(R.id.spinner_sectoare_volei);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(), R.array.sectoare,
                 android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -186,6 +190,7 @@ public class BaschetFragment extends Fragment {
 
             }
         });
+
     }
 
     @Override
@@ -198,8 +203,8 @@ public class BaschetFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.reguli:
                 AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
-                alertDialog.setTitle("Reguli de joc - Baschet");
-                alertDialog.setMessage(getResources().getString(R.string.reguliBaschet));
+                alertDialog.setTitle("Reguli de joc - Volei");
+                alertDialog.setMessage(getResources().getString(R.string.reguliVolei));
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -212,7 +217,6 @@ public class BaschetFragment extends Fragment {
         }
     }
 
-
     public interface TerenuriListCallback{
         void onCallback(List<Sport> value);
     }
@@ -220,7 +224,7 @@ public class BaschetFragment extends Fragment {
     public void getTerenuriFromFirebase(final FotbalFragment.TerenuriListCallback myCallback, int sector){
         if(sector==0){
             for(int i = 1; i <= 6; i++){
-                reff.child("TerenuriBaschet").child("Sector " + i).addListenerForSingleValueEvent(new ValueEventListener() {
+                reff.child("TerenuriVolei").child("Sector " + i).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
@@ -238,7 +242,7 @@ public class BaschetFragment extends Fragment {
                 });
             }
         }
-        reff.child("TerenuriBaschet").child("Sector " + sector).addListenerForSingleValueEvent(new ValueEventListener() {
+        reff.child("TerenuriVolei").child("Sector " + sector).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){

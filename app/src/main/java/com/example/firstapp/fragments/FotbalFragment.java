@@ -1,4 +1,4 @@
-package com.example.firstapp;
+package com.example.firstapp.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,9 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +22,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.firstapp.activitati.LoginActivity;
+import com.example.firstapp.R;
+import com.example.firstapp.clase.RecyclerViewAdapter;
+import com.example.firstapp.clase.Sport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,13 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.lang.String.*;
 
 public class FotbalFragment extends Fragment {
     private DatabaseReference reff;
@@ -179,7 +175,7 @@ public class FotbalFragment extends Fragment {
             case R.id.reguli:
                 AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
                 alertDialog.setTitle("Reguli de joc");
-                alertDialog.setMessage("awidboadibaowdbiawbodsio");
+                alertDialog.setMessage(getResources().getString(R.string.reguliFotbal));
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

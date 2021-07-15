@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VoleiFragment">
+    tools:context=".fragments.VoleiFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,6 +15,7 @@
         android:weightSum="3"
         android:orientation="horizontal"
         android:gravity="center"
+        android:id="@+id/sectoare_volei"
         android:layout_marginTop="25dp">
 
         <TextView
@@ -30,7 +31,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="8dp"
-            android:id="@+id/spinner_sectoare"
+            app:layout_constraintBottom_toTopOf="@id/rv_terenuriVolei"
+            android:id="@+id/spinner_sectoare_volei"
             android:textAlignment="center"
             android:layout_weight="2"
             />
@@ -49,5 +51,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/menu_volei"/>
+        android:text="@string/nu_exista_terenuri"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        android:id="@+id/rv_terenuriVolei"
+        app:layout_constraintTop_toBottomOf="@+id/sectoare_volei"
+        android:paddingBottom="65dp"
+        android:layout_marginTop="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
